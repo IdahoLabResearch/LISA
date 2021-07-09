@@ -1,0 +1,2 @@
+# LISA
+This model was developed to assess the viability of US Lithium supply from geothermal brine and the potential supply chain impact of extracting Lithium from this source. This model links global demand and supply of lithium (Li) considering different electric vehicle (EV) demand scenarios. We seek to answer the following questions: • What is the economic potential of Li extraction from US geothermal sources? • Is geothermal Li extraction technology a viable investment in the US? • What is the potential supply chain impact of Li supply from US geothermal sources?
