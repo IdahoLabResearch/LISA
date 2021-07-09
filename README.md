@@ -16,9 +16,13 @@ Here are the steps to follow to run the model:
 
 # IDAHO NATIONAL LABORATORY
 Idaho National Laboratory is a cutting edge research facility which is a constantly producing high quality research and software. Feel free to take a look at our other software and scientific offerings at:
+
 [Primary Technology Offerings Page](https://www.inl.gov/inl-initiatives/technology-deployment)
+
 [Supported Open Source Software](https://github.com/idaholab)
+
 [Raw Experiment Open Source Software](https://github.com/IdahoLabResearch)
+
 [Unsupported Open Source Software](https://github.com/IdahoLabCuttingBoard)
 
 
@@ -35,6 +39,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 Contact information of authors:
+
 Ange Lionel Toba: danhoangelionel.toba@inl.gov
+
 Ruby Nguyen: ruby.nguyen@inl.gov
+
 Idaho National Laboratory, P.O. Box 1625, MS 3710, Idaho Falls, ID 83415
