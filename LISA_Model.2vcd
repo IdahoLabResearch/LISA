@@ -1,0 +1,5086 @@
+!{UTF-8}
+:SCREEN WELCOME
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+TEXTONLY,"LITHIUM SUPPLY ANALYSIS (LISA) MODEL",0,10,100,,C|Times New Roman|28|B|0-0-0,,"",
+TEXTONLY,"Copyright 2021 Battelle Energy Alliance, LLC. Prepared by Battelle Energy Alliance, LLC  under Cont\
+ract No. DE-AC07-05ID14517  with the U. S. Department of Energy ",5,88,100,,C|Times New Roman|10||0-\
+0-255,,"",
+BUTTON,"ENTER",25,82,57,3,,,"",EXPLANATION
+TEXTONLY,"This computer software was produced by Battelle Energy Alliance, LLC. under Contract No. DE-AC07-05\
+ID14517 with the Department of Energy. This work is supported by the Critical Materials Institute, a\
+n Energy Innovation Hub funded by the U.S. Department of Energy, Office of Energy Efficiency and Ren\
+ewable Energy, Advanced Manufacturing Office under Grant AL-12-350-001. The Government is granted fo\
+r itself and others acting on its behalf a nonexclusive, paid-up, irrevocable worldwide license in t\
+his data to reproduce, prepare derivative works, and perform publicly and display publicly, by or on\
+ behalf of the Government. There is provision for the possible extension of the term of this license\
+.  Subsequent to that period or any extension granted, the Government is granted for itself and othe\
+rs acting on its behalf a nonexclusive, paid-up, irrevocable worldwide license in this data to repro\
+duce, prepare derivative works, distribute copies to the public, perform publicly and display public\
+ly, and to permit others to do so.  The specific term of the license can be identified by inquiry ma\
+de to Contractor or DOE.  NEITHER THE UNITED STATES NOR THE UNITED STATES DEPARTMENT OF ENERGY, NOR \
+CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY LIABILITY OR RESPONSIBILITY FOR TH\
+E USE, ACCURACY, COMPLETENESS, OR USEFULNESS OR ANY INFORMATION, APPARATUS, PRODUCT, OR PROCESS DISC\
+LOSED, OR REPRESENTS THAT ITS USE WOULD NOT INFRINGE PRIVATELY OWNED RIGHTS.",32,16,37,50,|Times New\
+ Roman|16||0-0-0,,"",
+TEXTONLY,"Authors:",33,69,,,|Times New Roman|14||0-0-0,,"",
+TEXTONLY,"Ruby T. Nguyen (ruby.nguyen@inl.gov)",33,73,,,|Times New Roman|14||0-0-0,,"",
+TEXTONLY,"Ange Lionel Toba (danhoangelionel.toba@inl.gov)",33,71,,,|Times New Roman|14||0-0-0,,"",
+TEXTONLY,"Idaho National Laboratory, P.O. Box 1625, MS 2020, Idaho Falls, ID 83415",33,75,,,|Times New Roman|\
+14||0-0-0,,"",
+TEXTONLY,"This code is licensed under GPL 2.0, see full text of the license at https://opensource.org/license\
+s/GPL-2.0",37,86,0,0,|Times New Roman|12||0-0-255,,,
+!
+:SCREEN MAIN
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+TEXTONLY,"Main Menu",0,5,100,,C|Times New Roman|20|B|0-0-0,,"",
+RECTANGLE,"",20,13,60,30,C||||0-0-255,,"",
+BUTTON,"Review Model Structure",50,15,50,6,C,Oo,"",OVERVIEW
+BUTTON,"Simulate Model",25,24,50,6,,,"",SETUP
+BUTTON,"Exit to Welcome Page",50,85,40,5,C,EeXx,"",WELCOME
+!
+:SCREEN OVERVIEW
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+TEXTONLY,"Model Structure Overview",-1,4,100,,C|Times New Roman|20|B|0-0-255,,"",
+BUTTON,"PRODUCTION",49,26,10,13,C,Ww,,PRODUCTION
+BUTTON,"DEMAND",41,44,12,12,C,Ww,,DEMAND
+BUTTON,"MARKET",59,44,12,12,C,Ww,,MARKET
+BUTTON,"Exit to Main Menu",50,90,50,,C,EeXx,"",MAIN
+LINE,"",52,37,6,11,,,,
+LINE,"",40,48,6,-11,,,,
+TEXTONLY,"The model is comprised of three inter-linked sub-models: (1) Production, (2) Demand, and (3) Market\
+. ",32,16,33,8,|Times New Roman|12||0-0-0,,,
+TEXTONLY,"The|
+TEXTONLY,"The Production model captures Lithium production from three sources: ore, salar brines, and geother\
+mal brines",33,63,32,2,,,,
+TEXTONLY,"The Demand model captures the Lithium demand from 2010 to 2019 and projected demand from 2020 to 20\
+30 considering both EV and non-EV demand",33,66,32,4,,,,
+TEXTONLY,"The market model captures the price mechanism, function of the backlog pressure which measures the \
+pressure to meet the demand on time and keep the backlog at its minimum",33,69,33,5,,,,
+LINE,"",45,50,10,0,,,,
+!
+:SCREEN SETUP
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+TEXTONLY,"Run Selection",0,5,100,,C|Times New Roman|20|B|0-0-255,,"",
+BUTTON,"Run Scenario",25,19,50,5,,Mm,,SHOWSCENARIO
+BUTTON,"Exit to Main Menu",50,90,50,,C,EeXx,"",MAIN
+BUTTON,"Run Sensitivity Analysis",25,28,50,5,,Mm,,SENSANALYSIS
+!
+TEXTONLY,"Note",0,54,100,0,C|Times New Roman|20|B|0-0-255,,,
+TEXTONLY,"Sensitivity analysis let users use sliders and instantly see changes in output variables. Users wil\
+l be prompted to enter a run name.",49,58,0,0,C|Times New Roman|14||0-0-0,,,
+TEXTONLY,"Scenario let users change input variables before runing the model. ",38,62,0,0,|Times New Roman|14|\
+|0-0-0,,,
+!
+:SCREEN SENSANALYSIS
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+TEXTONLY,"Sensitivity Analysis",38,1,100,0,|Times New Roman|28|B|0-0-255,0,,
+COMMAND,"",0,0,,,,,"SIMULATE>RUNNAME|?",
+COMMAND,"",0,0,,,,,"MENU>SYNTHESIM|",
+WIPTOOL,"GR1",2,10,29,34,,5,CUSTOM>supdmd,
+WIPTOOL,"total supply",33,10,30,34,,5,CUSTOM>Total_Li_supply,
+WIPTOOL,"potential production",64,10,31,34,,5,CUSTOM>Potential_Li_production,
+SLIDEVAR,"TIME TO ADJUST PRICE",19,85,13,3,,[.5|5|0.1],,
+TEXTONLY,"Time to adjust price",25,83,0,0,C,,,
+SLIDEVAR,"TIME TO CORRECT BACKLOG",52,85,12,3,,[.1|1.5|.005],,
+TEXTONLY,"Time to correct backlog",58,83,0,0,C,,,
+SLIDEVAR,"DMD ELASTICITY",35,85,13,3,,[0|3|.1],,
+TEXTONLY,"Demand elasticity",41,83,0,0,C,,,
+TEXTONLY,"Lithium Supply-Demand",10,8,10,,,,"",
+TEXTONLY,"Total supply",44,8,10,0,,,,
+TEXTONLY,"Potential Lithium production",73,8,10,,,,"",
+BUTTON,"Return to Run selection",19,89,46,5,,,SPECIAL>STOPSIM|,SETUP
+WIPTOOL,"GR1",1,48,30,32,,5,CUSTOM>price,
+WIPTOOL,"GR1",33,48,30,32,,5,CUSTOM>annualProfit,
+TEXTONLY,"Lithium price",15,46,10,,,,"",
+TEXTONLY,"Annual profit",44,46,10,0,,,,
+TEXTONLY,"NOTE",78,49,0,0,|Times New Roman|14||0-0-255,,,
+TEXTONLY,"This window allows users to explore changes in behavior, using sliders. As users move the sliders t\
+hey will observe instant variation on the graphs presented. ",69,51,21,6,,,,
+!
+:SCREEN SCENASSUMP
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+TEXTONLY,"Scenario Assumptions",2,2,100,,C|Times New Roman|20|B|0-0-255,,"",
+TEXTONLY,"Capital Expenditures ($M)",37,19,,,L,,"",
+TEXTONLY,"Operational Expenditures ($/ton)",36,26,,,L,,"",
+MODVAR,"CAPEX",58,18,6,4,L,|[0|1E6|1E5],,
+MODVAR,"UNIT OPEX",58,25,6,5,L,|[0|1E6|1E5],,
+BUTTON,"Record Changes and Return",26,74,50,5,L,Rr,"",SETUP
+BUTTON,"Cancel Changes and Return",26,82,50,5,,EeXx,"CANCEL>",SETUP
+TEXTONLY,"With/out geothermal (Select 1 to consider geothermal, or 0 not to consider it.)",37,34,,,C,,"",
+MODVAR,"\"GEOTHERMAL ON?\"",58,33,6,5,L,|[0|1E6|1E5],,
+MODVAR,"SCENARIO CHOICE",58,41,6,5,L,|[0|1E6|1E5],"",
+TEXTONLY,"Scenario Choice - 1 for NPS, 2 for EV30",37,42,,,C,,"",
+TEXTONLY,"Note",-31,53,100,,C|Times New Roman|20|B|0-0-255,,"",
+TEXTONLY,"As changes in input are initiated, it is encouraged to create new run names when prompted. The  run\
+s will be saved automatically, and will be compared for analysis",54,55,,,C,,"",
+!
+:SCREEN SHOWSCENARIO
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+WIPTOOL,"Price",6,9,26,26,,,CUSTOM>price,
+BUTTON,"Return to Main Menu",15,90,29,4,L,EeXx,,MAIN
+TEXTONLY,"Scenario Results",-1,1,100,0,C|Times New Roman|20|B|0-0-255,,,
+TEXTONLY,"Capital Expenditures ($M)",7,79,0,0,L|Times New Roman|12||0-0-0,,,
+TEXTONLY,"Operational Expenditures ($/ton)",6,76,0,0,L|Times New Roman|12||0-0-0,,,
+MODVAR,"CAPEX",19,80,7,3,L,|[0|1E6|1E5],,
+MODVAR,"UNIT OPEX",18,76,7,3,L,|[0|1E6|1E5],,
+BUTTON,"Record Changes and Run",15,85,29,4,L,Rr,MENU>RUN1|,SHOWSCENARIO
+TEXTONLY,"With/out geothermal (Select 1 to consider geothermal, or 0 not to consider it.)",38,76,42,4,C|Times\
+ New Roman|12||0-0-0,,,
+MODVAR,"\"GEOTHERMAL ON?\"",81,76,7,3,L,|[0|1E6|1E5],,
+MODVAR,"SCENARIO CHOICE",81,80,7,3,L,|[0|1E6|1E5],,
+TEXTONLY,"Scenario Choice - 1 for NPS, 2 for EV30",67,81,0,0,C|Times New Roman|12||0-0-0,,,
+TEXTONLY,"Note",-41,69,100,0,C|Times New Roman|14|B|0-0-255,,,
+TEXTONLY,"This page allows users to explore a model through a number of menus and output screens.  Users can \
+just change parameters from any variable and run the simulation. Users can also load and unload runs\
+ to compares changes. Once a simulation is run, parameter values change to their default value. ",6,\
+71,78,3,C|Times New Roman|12||0-0-0,,"",
+WIPTOOL,"li from geo",6,40,26,28,L,x%lyl[|2e5],CUSTOM>Li_from_geothermal,
+WIPTOOL,"li from ore",36,40,25,28,L,x%lyl[0|2e7],CUSTOM>Li_from_ore,
+WIPTOOL,"annual profit",65,8,26,26,L,x%lyl[0|8e8],CUSTOM>annualProfit,
+WIPTOOL,"potential production",36,8,25,27,L,x%lyl[0|2e7],CUSTOM>Potential_Li_production,
+WIPTOOL,"brine li to be sold",65,40,26,28,L,x%lyl[0|8e8],CUSTOM>Li_from_brine,
+BUTTON,"Cancel Changes and Return",47,90,29,4,,EeXx,CANCEL>,SETUP
+BUTTON,"Load, unload and reorder previously run scenarios",47,85,29,4,,1,MENU>LOAD_RUN|,
+!
+COMMAND,"",,,,,,,"MENU>RUN1|O",
+TEXTONLY,"Potential Lithium production",44,6,,,L|Times New Roman|12||0-0-0,,"",
+TEXTONLY,"Lithium from brine",74,38,,,L|Times New Roman|12||0-0-0,,"",
+TEXTONLY,"Lithium from ore",44,38,,,L|Times New Roman|12||0-0-0,,"",
+TEXTONLY,"Lithium from geothermal",14,38,,,L|Times New Roman|12||0-0-0,,"",
+TEXTONLY,"Lithium price",16,7,0,0,L|Times New Roman|12||0-0-0,,,
+TEXTONLY,"Annual profit",78,6,,,L|Times New Roman|12||0-0-0,,"",
+!
+:SCREEN RUNSENS
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+WIPTOOL,"GR1",5,5,80,80,,,"CUSTOM>price",
+COMMAND,"",0,0,,,,,"SPECIAL>CLEARRUNS|",
+COMMAND,"",0,0,,,,,"SIMULATE>RUNNAME|current.vdf",
+COMMAND,"",0,0,,,,,"SIMULATE>SENSITIVITY|Li market-simplified brine.vsc",
+COMMAND,"",0,0,,,,,"SIMULATE>SENSSAVELIST|Li market-simplified brine.lst",
+COMMAND,"",0,0,,,,,"MENU>RUN_SENSITIVITY|O",
+CLOSESCREEN,"",0,0,,,,,"",SENS1
+!
+:SCREEN PRODUCTION
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+SKETCH,"SK1",1,1,80,80,,,"2",
+BUTTON,"Return to Overview",8,83,20,7,,,,OVERVIEW
+TEXTONLY,"Production from Brine",37,-3,,,||20|B|255-0-0,,"",
+BUTTON,"Production from Geothermal",50,83,20,7,,,,PRODUCTION3
+BUTTON,"Production from Ore",29,83,20,7,,,"",PRODUCTION2
+!
+:SCREEN DEMAND
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+SKETCH,"SK1",4,0,80,80,,,3,
+BUTTON,"Return to Overview",30,84,20,7,,,,OVERVIEW
+!
+:SCREEN MARKET
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+SKETCH,"SK1",2,-2,80,80,,,1,
+BUTTON,"Reteru to Overview",30,82,20,7,,,,OVERVIEW
+!
+:SCREEN ANALYSIS
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+TEXTONLY,"Analysis Control",0,4,100,,C||18|B|255-0-0,,"",
+BUTTON,"Load, unload previous scenarios",15,10,70,,L|Times New Roman|10||0-0-0,1,"MENU>LOAD_RUN|",
+TEXTONLY,"Results",0,26,100,,C||18|B|0-0-255,,"",
+BUTTON,"Summary for recently run (first loaded) scenario",15,33,70,,,2,"",RESULTS
+BUTTON,"Summary comparison of loaded scenarios (up to 2)",15,38,70,3,L|Times New Roman|10||0-0-0,3,,COMPARE
+BUTTON,"Exit to Run Selection",50,81,50,5,C,,,SETUP
+!
+:SCREEN RESULTS
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+GRAPHVAR,"li from geo",10,20,20,20,L|8,x%lyl[|2e5],"",
+TEXTONLY,"Li from Geothermal",20,15,,,C|B,,"",
+GRAPHVAR,"total supply",40,20,20,20,L|8,x%lyl[0|2e7],"",
+TEXTONLY,"Total Li supply",50,15,,,C,,"",
+GRAPHVAR,"annual profit",70,20,20,20,L|8,x%lyl[0|8e8],"",
+TEXTONLY,"Annual Profit",80,15,,,C,,"",
+BUTTON,"Return to Analysis",50,90,50,5,C,,"",ANALYSIS
+RUNNAME,"*1",50,5,,,C||18|B|255-0-0,,"",
+!
+:SCREEN COMPARE
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+TEXTONLY,"Assumption",0,3,,,L||14|B|,,"",
+TEXTONLY,"capital Expenditure",6,7,0,0,,,,
+TEXTONLY,"Operational Expenditure",6,10,0,0,,,,
+TEXTONLY,"With/out geothermal",6,13,0,0,,,,
+TEXTONLY,"Results",0,27,0,0,|Times New Roman|14|B|0-0-0,,,
+TEXTONLY,"Annual Profit",11,32,0,0,,,,
+TEXTONLY,"Total Li supply",11,48,0,0,L,,,
+TEXTONLY,"Li from geothermal",11,64,0,0,L,,,
+SHOWVAR,"CAPEX&*1",33,7,0,0,L,,,
+SHOWVAR,"UNIT OPEX&*1",33,10,0,0,L,,,
+GRAPHVAR,"annual profit&*1",31,34,24,13,|Times New Roman|8||0-0-0,x%lyl[0|8e8],,
+GRAPHVAR,"total supply&*1",31,48,24,14,C|Times New Roman|8||0-0-0,x%lyl[0|2e7],"",
+GRAPHVAR,"li from geo&*1",31,64,24,16,L|Times New Roman|8||0-0-0,x%lyl[|2e5],,
+RUNNAME,"*1",32,1,0,0,|Arial|10|B|0-0-0,,,
+SHOWVAR,"CAPEX&*2",72,7,0,0,L,,,
+SHOWVAR,"UNIT OPEX&*2",72,10,0,0,L,,,
+GRAPHVAR,"annual profit&*2",67,34,23,13,|Times New Roman|8||0-0-0,x%lyl[0|8e8],,
+GRAPHVAR,"total supply&*2",67,48,24,14,C|Times New Roman|8||0-0-0,x%lyl[0|2e7],"",
+GRAPHVAR,"li from geo&*2",67,64,24,16,L|Times New Roman|8||0-0-0,x%lyl[|2e5],,
+RUNNAME,"*2",71,1,0,0,|Arial|10|B|0-0-0,,,
+BUTTON,"Return to Analysis",29,89,50,5,C,,,ANALYSIS
+!
+SHOWVAR,"\"GEOTHERMAL ON?\"&*2",72,13,0,0,L,|[0|1E6|1E5],,
+SHOWVAR,"\"GEOTHERMAL ON?\"&*1",33,13,0,0,L,|[0|1E6|1E5],,
+SHOWVAR,"SCENARIO CHOICE&*2",72,16,0,0,L,|[0|1E6|1E5],,
+TEXTONLY,"Scenario Choice - 1 for NPS, 2 for EV30",15,16,0,0,C,,,
+SHOWVAR,"SCENARIO CHOICE&*1",33,16,0,0,L,|[0|1E6|1E5],,
+!
+:SCREEN RUNSCENARIO
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+GRAPHVAR,"Price",5,5,90,80,,,"",
+COMMAND,"",0,0,,,,,"MENU>RUN1|",
+COMMAND,"",0,0,0,,,,"SPECIAL>SETWBITEM|Price",
+CLOSESCREEN,"",0,0,0,,,,"",SHOWSCENARIO
+!
+:SCREEN SETSENS
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!!	~	ton/Year
+!!*	~	IF THEN ELSE (Overcapacity Brine Conversion Count>=2,REFINING CAPA 		BUFFER*(Brine Processing C\
+apacity+Brine Processing Capacity*demand growth 		rate*TIME TO BUILD REFIN CAPA/per year),Brine Proc\
+essing Capacity)
+SLIDEVAR,"TIME TO ADJUST PRICE",32,22,13,5,,[.1|0.8501|0.01],"",
+TEXTONLY,"Time to adjust price",26,22,0,0,C,,,
+SLIDEVAR,"TIME TO CORRECT BACKLOG",32,42,13,5,,[.1|0.2501|.01],"",
+TEXTONLY,"Time to correct backlog",24,42,0,0,C,,,
+SLIDEVAR,"DMD ELASTICITY",32,32,13,5,,[0|0.5401|.01],"",
+TEXTONLY,"Demand elasticity",25,32,0,0,C,,,
+TEXTONLY,"Minimum",40,17,0,0,,,,
+TEXTONLY,"Maximum",52,17,0,0,,,,
+SLIDEVAR,"TIME TO ADJUST PRICE",52,22,13,5,,[0.85|2|0.01],"",
+SLIDEVAR,"DMD ELASTICITY",52,32,13,5,,[0.54|1.5|.01],"",
+SLIDEVAR,"TIME TO CORRECT BACKLOG",52,41,13,5,,[0.25|1|.01],"",
+BUTTON,"RUN MONTE CARLO SENSITIVITY ANALYSIS",33,54,32,10,,Ss,"",RUNSENS
+BUTTON,"EXIT TO RUN SELECTION",33,68,32,10,,,"",SETUP
+!
+:SCREEN SENS1
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!!	|
+!!
+WBVAR,"",34,2,,,L|Times New Roman|18|B|255-0-0,,"",
+TOOL,"GR1",5,10,70,70,,,"WORKBENCH>Sensitivity Graph",
+BUTTON,"Return to Sensitivity Run",37,83,19,4,,,,SETUP
+BUTTON,"Annual profit",14,89,19,4,,,"",SENS2
+BUTTON,"total supply",37,89,19,4,,,"",SENS3
+!
+:SCREEN SENS2
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!!adjusted demand=
+WBVAR,"annual profit",33,2,,,L|Times New Roman|18|B|255-0-0,,"",
+TOOL,"GR1",5,10,80,80,,,"WORKBENCH>Sensitivity Graph",
+BUTTON,"Price",6,93,15,,,,"",SENS1
+BUTTON,"total supply",37,93,14,3,,,"",SENS3
+BUTTON,"Supply from Ore",52,93,14,3,,,"",SENS4
+BUTTON,"Supply from Geothermal",67,93,14,3,,,"",SENS5
+BUTTON,"Return to Sensitivity Run",5,99,76,4,,,"",SETUP
+!
+:SCREEN SENS3
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!!	adjusted demand based on supply*(effect price demand)
+WBVAR,"",34,2,0,0,L|Times New Roman|18|B|255-0-0,,,
+TOOL,"GR1",5,10,80,80,,,"WORKBENCH>Sensitivity Graph",
+BUTTON,"Potential Production",22,93,15,,,,"",SENS2
+BUTTON,"Supply from Ore",52,93,14,3,,,"",SENS4
+BUTTON,"Supply from Geothermal",67,93,14,3,,,"",SENS5
+BUTTON,"Return to Sensitivity Run",5,99,76,4,,,"",SETUP
+BUTTON,"Price",6,93,15,,,,"",SENS1
+!
+:SCREEN SENS4
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!!	~	ton/yr
+!!*	~	MAX(0,Demand*(Price/price year before)^DEMAND ELASTICITY)
+WBVAR,"",33,3,0,0,|Times New Roman|18|B|255-0-0,,,
+TOOL,"GR1",5,10,80,80,,,"WORKBENCH>Sensitivity Graph",
+BUTTON,"Potential Production",23,93,15,,,,"",SENS2
+BUTTON,"Supply from Brine",40,93,14,3,,,"",SENS3
+BUTTON,"Supply from Geothermal",67,93,14,3,,,"",SENS5
+BUTTON,"Return to Sensitivity Run",5,99,76,4,,,"",SETUP
+BUTTON,"Price",6,93,15,,,,"",SENS1
+!
+:SCREEN SENS5
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!!	|
+!!
+WBVAR,"",34,2,0,0,|Times New Roman|18|B|255-0-0,,,
+TOOL,"",5,10,70,69,,,WORKBENCH>Sensitivity Graph,
+BUTTON,"Potential Production",19,83,15,0,,,,SENS2
+BUTTON,"Supply from Brine",35,83,14,3,,,,SENS3
+BUTTON,"Supply from Ore",50,83,14,3,,,,SENS4
+BUTTON,"Return to Sensitivity Run",5,89,70,3,,,,SETUP
+BUTTON,"Price",5,83,13,3,,,,SENS1
+!
+:SCREEN PRODUCTION2
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!!adjusted demand based on supply=
+!!*	IF THEN ELSE(supply demand ratio<1,total theoretical Li demand, total theoretical Li demand		*sup\
+ply demand ratio)
+TEXTONLY,"Production from Ore",37,-3,,,||20|B|255-0-0,,"",
+SKETCH,"SK1",1,1,80,80,,,"4",
+BUTTON,"Return to Overview",8,83,20,7,,,,OVERVIEW
+BUTTON,"Production from Geothermal",50,83,20,7,,,,PRODUCTION3
+BUTTON,"Production from Brine",29,83,20,7,,,"",PRODUCTION
+!
+:SCREEN PRODUCTION3
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!!	~	ton/yr
+BUTTON,"Return to Overview",8,83,20,7,,,,OVERVIEW
+BUTTON,"Production from Brine",50,83,20,7,,,,PRODUCTION
+BUTTON,"Production from Ore",29,83,20,7,,,"",PRODUCTION2
+SKETCH,"",1,1,80,80,,,"6",
+TEXTONLY,"Production from Geothermal",37,-3,,,||20|B|255-0-0,,"",
+!
+:SCREEN EXPLANATION
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!!	~		|
+!!
+TEXTONLY,"ANALYSIS",36,13,22,3,|Times New Roman|14||0-0-255,,,
+TEXTONLY,"The global supply chain of Li was analyzed given the potential introduction of Li extraction from U\
+S geothermal brines starting in 2020.",19,14,57,6,|Times New Roman|14||0-0-0,,,
+TEXTONLY,"DETAILS & FINDINGS",38,41,22,3,|Times New Roman|14||0-0-255,,,
+TEXTONLY,"Using Systems Dynamics modeling to capture and understand impacts of  introducing Li extraction fro\
+m geothermal on global market. We found that:",20,43,57,4,|Times New Roman|14||0-0-0,,,
+TEXTONLY,"SIGNIFICANCE & IMPACT",37,24,22,3,|Times New Roman|14||0-0-255,,,
+TEXTONLY,"As the demand for electric vehicles (EVs) increases, demand for  Li for batteries is expected to gr\
+ow over the coming decade. This work investigates the investment viability of Li extraction technolo\
+gy from US geothermal brines and potential supply chain impact on global Li supply.",19,26,58,8,|Tim\
+es New Roman|14||0-0-0,,,
+TEXTONLY,"+ Li supply from geothermal could reach ~ 60,000 tonnes by 2030, representing 4% to 8% of the total\
+ supply.",19,45,27,9,|Times New Roman|14||0-0-0,,,
+TEXTONLY,"+ Potential profit from geothermal Li extraction could reach up to $258M and $311M given projection\
+s of 23 and 43 million EVs by 2030, respectively.",19,52,27,9,|Times New Roman|14||0-0-0,,,
+TEXTONLY,"PUBLICATIONS",37,66,22,3,|Times New Roman|14||0-0-255,,,
+TEXTONLY,"This study bridges the gap in the literature by looking at the investment viability of Li extractio\
+n technology and potential supply chain impact of Li extraction from geothermal brines on global Li \
+supply.",20,69,58,4,|Times New Roman|14||0-0-0,,,
+TEXTONLY,"Through a dynamic study, we analyzed the dynamics of the economics of Li production from geothermal\
+ and  other sources. This was done using Systems dynamics modeling to capture market structure, supp\
+ly/demand balance and Li price changes via EV batteries demand scenario. ",21,79,58,4,|Times New Rom\
+an|14||0-0-0,,,
+TEXTONLY,"Through a theoretical study, we estimated the  potential for  Li  output from  geothermal sources a\
+nd highlighted substantial financial benefits deriving from these sources. This was done using exist\
+ing US geothermal plants, their maximum electricity production output, typical production output and\
+ Li price.",20,73,58,5,|Times New Roman|14||0-0-0,,,
+TEXTONLY,"Article can be found on https://www.sciencedirect.com/science/article/pii/S092134492100121X",22,86,\
+0,0,|Times New Roman|14||0-0-0,,,
+BUTTON,"Go to Simulation",42,91,17,3,,,,SETUP
+!
+:SCREEN ERROR24
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!order proc time comparison=
+:SCREEN ERROR25
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	(actual backlog time-TIME TO AVERAGE ORDERS)/TIME TO AVERAGE ORDERS
+:SCREEN ERROR26
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR27
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR28
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!targeted mining capacity 0=
+!*	IF THEN ELSE (Observe Continuous Demand Growth>2,MINING CAPA BUFFER FACTOR*Concentrate Capacity		*\
+TIME TO BUILD MINING CAPA
+!*	/per year,Concentrate Capacity)
+:SCREEN ERROR29
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+!*	~	IF THEN ELSE (Concentrate Overcapacity Counting>=2,MINING CAPA BUFFER 		FACTOR*(Concentrate Capa\
+city+Concentrate Capacity*demand growth rate*TIME 		TO BUILD MINING CAPA/per year),Concentrate Capac\
+ity)
+:SCREEN ERROR30
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR31
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!targeted process capacity=
+!*	IF THEN ELSE (Observe Continuous Demand Growth>2,Processing Capacity*REFINING CAPA BUFFER		 ,Proce\
+ssing Capacity)
+:SCREEN ERROR32
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+!*	~	IF THEN ELSE (Overcapacity Conversion Count>=2,REFINING CAPA BUFFER*(Processing 		Capacity+Proce\
+ssing Capacity*demand growth rate
+:SCREEN ERROR33
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		*TIME TO BUILD REFIN CAPA
+!*		/per year),Processing Capacity)
+:SCREEN ERROR34
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR35
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!supply demand ratio=
+:SCREEN ERROR36
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	total supply/posted demand
+:SCREEN ERROR37
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR38
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR39
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!direct extraction=
+:SCREEN ERROR40
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	tentative brine extraction quantity evap method*(1-evap capacity share)
+:SCREEN ERROR41
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR42
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR43
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Net Flow=
+:SCREEN ERROR44
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	annual profit-actual capex/TIME STEP
+:SCREEN ERROR45
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	$/Year
+:SCREEN ERROR46
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR47
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!rock mining=
+!*	MIN(tentative mining quantity,Concentrate Capacity)
+:SCREEN ERROR48
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+!*	~	MIN(tentative mining quantity,Concentrate Capacity/PHYSICAL RECOVERY RATE)
+:SCREEN ERROR49
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR50
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!tentative brine extraction quantity evap method=
+:SCREEN ERROR51
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	potential brine supply curve/CONVERSION RECOVERY RATE/CONC RECOVERY RATE
+:SCREEN ERROR52
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR53
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	potential brine supply curve/CONVERSION RECOVERY RATE
+:SCREEN ERROR54
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR55
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!counting 2=
+!*	IF THEN ELSE(supply demand ratio < 1,1,0)
+:SCREEN ERROR56
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	1/yr
+:SCREEN ERROR57
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR58
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!posted demand= DELAY FIXED (
+!*	adjusted demand
+:SCREEN ERROR59
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+:SCREEN ERROR60
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR61
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!NPVV=
+!*	NPV(Net Flow,DISCOUNT RATE,0,1)
+:SCREEN ERROR62
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	$
+:SCREEN ERROR63
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR64
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!new orders=
+:SCREEN ERROR65
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	posted demand
+:SCREEN ERROR66
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+:SCREEN ERROR67
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR68
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!"start new investment?"=
+!*	IF THEN ELSE( Time <2020
+:SCREEN ERROR69
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	 :AND:ave li amount extracted per yr >=Installed Geo Li Concentrating Capa
+!*	
+:SCREEN ERROR70
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR71
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR72
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!adjusted supply=
+:SCREEN ERROR73
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	total supply
+:SCREEN ERROR74
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+!*	~	+RAMP(80000
+:SCREEN ERROR75
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR76
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!processed orders=
+!*	MIN(desired production,adjusted supply)
+:SCREEN ERROR77
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+!*	~	MIN(desired production,total supply)
+:SCREEN ERROR78
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR79
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Concentrate Inventory= INTEG (
+:SCREEN ERROR80
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	processed ore-to refinery
+:SCREEN ERROR81
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		2000)
+:SCREEN ERROR82
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+:SCREEN ERROR83
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	processed ore*per year
+:SCREEN ERROR84
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		43000 - 2010
+:SCREEN ERROR85
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR86
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!potential brine supply curve=
+!*	Brine Processing Capacity*LOOKUP FORWARD(PCT BRINE SUPPLY TABLE
+:SCREEN ERROR87
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+!*	~	Roskill
+:SCREEN ERROR88
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR89
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!potential ore supply curve=
+!*	Processing Capacity*LOOKUP FORWARD(PCT ORE SUPPLY TABLE
+:SCREEN ERROR90
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+!*	~	([(4,0)-(44,400)],(4,20),(8,25),(12,40),(16,80),(20,125),(24,225),(28,235),(32,240),(		36,275),(\
+40,280),(44,300) )
+!*		 20,25,40,80,125,225,235,240,275,280,300,310,325,350,375,380
+:SCREEN ERROR91
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR92
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Li in Evap Pond= INTEG (
+:SCREEN ERROR93
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	brine extraction-li concentrate-li lost in evap process
+:SCREEN ERROR94
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		100000)
+:SCREEN ERROR95
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+:SCREEN ERROR96
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	brine extraction*per year
+:SCREEN ERROR97
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		230000 - 2010
+:SCREEN ERROR98
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR99
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Concentrate at Conversion= INTEG (
+:SCREEN ERROR100
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	to refinery-Li to be refined
+:SCREEN ERROR101
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		2000
+:SCREEN ERROR102
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		)
+:SCREEN ERROR103
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+:SCREEN ERROR104
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	to refinery*per year
+:SCREEN ERROR105
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		39000 - 2010
+:SCREEN ERROR106
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR107
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!chg in price=
+:SCREEN ERROR108
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	(new price-Price)/TIME TO ADJUST PRICE
+:SCREEN ERROR109
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	$/(yr*ton)
+:SCREEN ERROR110
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR111
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!new price=
+:SCREEN ERROR112
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	Price*multi
+:SCREEN ERROR113
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	$/ton
+:SCREEN ERROR114
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Price*((total supply/posted demand)^(1/DEMAND ELASTICITY))
+:SCREEN ERROR115
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		Price*((posted demand/total supply)^(1/DMD ELASTICITY))
+:SCREEN ERROR116
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR117
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Refined Li Inventory= INTEG (
+:SCREEN ERROR118
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	refining-li from ore
+:SCREEN ERROR119
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		refining*per year)
+:SCREEN ERROR120
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+:SCREEN ERROR121
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	refining*per year
+:SCREEN ERROR122
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		42000 - 2010
+:SCREEN ERROR123
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR124
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Hydroxide or Carbonate Inventory= INTEG (
+:SCREEN ERROR125
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	converted lithium-brine li to be sold
+:SCREEN ERROR126
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		10000)
+:SCREEN ERROR127
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+:SCREEN ERROR128
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	100000 converted lithium*per year - 
+:SCREEN ERROR129
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		60000 from 2010
+:SCREEN ERROR130
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR131
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!LI SUPPLY TABLE(
+!*	[(2000,0)-(8500,1)],(2000,0),(2200,0),(2300,0.34),(3000,0.57),(3500,0.77),(3800,0.8)		,(4600,0.85)\
+,(6200,0.97),(8500,1))
+:SCREEN ERROR132
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR133
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	rOSKILL - cOST SURVE 2013
+:SCREEN ERROR134
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR135
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!multi=
+!*	LOOKUP EXTRAPOLATE(EFFECT BACKLOG ON PRICEW
+:SCREEN ERROR136
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR137
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR138
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!backlog pressure=
+:SCREEN ERROR139
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	processed orders/new orders
+:SCREEN ERROR140
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR141
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR142
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!EFFECT BACKLOG ON PRICEW(
+!*	[(0.1,0)-(1,3)],(0.1,1.5),(0.3,1.05),(0.5,1.02),(0.75,1.01),(1,1))
+:SCREEN ERROR143
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+!*	~	[(0,0)-(10,10)],(0.1,3),(0.3,2),(0.5,1.5),(1,1)
+:SCREEN ERROR144
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR145
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!"Table for Capex/ConvCap Module"(
+!*	[(0,0)-(3e+006,10)],(0,0),(500000,1),(750000,1.1),(1e+006,1.2),(1.25e+006,1.3),(1.5e+006		,1.4),(1\
+.75e+006,1.5),(2e+006,1.6),(2.225e+006,1.7),(2.5e+006,1.8),(2.75e+006,1.9),		(3e+006,2))
+:SCREEN ERROR146
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR147
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR148
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Conversion Cap per dollar=
+!*	LOOKUP EXTRAPOLATE( "Table for Capex/ConvCap Module"
+:SCREEN ERROR149
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR150
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR151
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!"Table for Capex/ConcCap Module"(
+!*	[(0,0)-(3e+006,10)],(0,0),(500000,1),(750000,1.2),(1e+006,1.4),(1.25e+006,1.6),(1.5e+006		,1.8),(1\
+.75e+006,2),(2e+006,2.2),(2.225e+006,2.4),(2.5e+006,2.6),(2.75e+006,2.8),(3e+006		,3))
+:SCREEN ERROR152
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR153
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR154
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!adding capacity=
+!*	IF THEN ELSE( Time = 2020 :OR: Time = Year of New Investment
+!*	
+:SCREEN ERROR155
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/(Year*Year)
+:SCREEN ERROR156
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR157
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!adding geo conversion capa=
+!*	IF THEN ELSE( Time = 2020 :OR: Time = Year of New Investment
+:SCREEN ERROR158
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/(Year*Year)
+!*	~	IF THEN ELSE( Time = 2020 :OR: Time = Year of New Investment
+!*		
+:SCREEN ERROR159
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		Got rid of "time step" as it increases the capacity beyond the limit
+:SCREEN ERROR160
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR161
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Conversion Cap built=
+:SCREEN ERROR162
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	LI CONVERSION CAPA MODULE*(0+Conversion Cap per dollar)
+:SCREEN ERROR163
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+:SCREEN ERROR164
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR165
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!tonperyear=
+:SCREEN ERROR166
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	1
+:SCREEN ERROR167
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+:SCREEN ERROR168
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR169
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!converted lithium=
+!*	MIN(CONVERSION RECOVERY RATE*(li conc from ion exchange+li concentrate),CONVERSION RECOVERY RATE		\
+*Brine Processing Capacity)
+:SCREEN ERROR170
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+!*	~	MIN(CONVERSION RECOVERY RATE*(li conc from ion exchange+li 		concentrate),CONC RECOVERY RATE*Bri\
+ne Processing Capacity)
+:SCREEN ERROR171
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR172
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!dollar=
+:SCREEN ERROR173
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	1
+:SCREEN ERROR174
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	$
+:SCREEN ERROR175
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR176
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Concentration Cap built=
+:SCREEN ERROR177
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	LI CONCENTRATING CAPACITY MODULE*(0+Concentration Cap per dollar)
+:SCREEN ERROR178
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+:SCREEN ERROR179
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR180
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Concentration Cap per dollar=
+!*	LOOKUP EXTRAPOLATE( "Table for Capex/ConcCap Module"
+:SCREEN ERROR181
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR182
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR183
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!LI CONCENTRATING CAPACITY MODULE=
+:SCREEN ERROR184
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	20000
+:SCREEN ERROR185
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR186
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	According to Parans papers- 20000
+:SCREEN ERROR187
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR188
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!price year before= DELAY FIXED (
+!*	Price
+:SCREEN ERROR189
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	$/ton
+:SCREEN ERROR190
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR191
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!effect price demand=
+:SCREEN ERROR192
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	EXP(-DMD ELASTICITY * LN(Price/price year before))
+:SCREEN ERROR193
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR194
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	EXP(-DMD ELASTICITY * LN(Price/price year before))
+:SCREEN ERROR195
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		(Price/price year before)^(-DMD ELASTICITY)
+:SCREEN ERROR196
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR197
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!actual backlog time=
+!*	MAX( ZIDZ(Backlog
+:SCREEN ERROR198
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	yr
+:SCREEN ERROR199
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR200
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Concentrate capacity growth=
+:SCREEN ERROR201
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	mine capacity to add 0
+:SCREEN ERROR202
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/(Year*Year)
+:SCREEN ERROR203
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR204
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Processing capacity growth=
+:SCREEN ERROR205
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	process capacity to add
+:SCREEN ERROR206
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/(Year*Year)
+:SCREEN ERROR207
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR208
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!desired backlog=
+:SCREEN ERROR209
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	Average Orders*STANDARD BACKLOG TIME
+:SCREEN ERROR210
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+:SCREEN ERROR211
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR212
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!desired production=
+:SCREEN ERROR213
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	(backlog correction+Average Orders)
+:SCREEN ERROR214
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+:SCREEN ERROR215
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR216
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Average Orders= INTEG (
+:SCREEN ERROR217
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	(new orders-Average Orders)/TIME TO AVERAGE ORDERS
+:SCREEN ERROR218
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		new orders)
+:SCREEN ERROR219
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+:SCREEN ERROR220
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR221
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!brine process capacity growth=
+:SCREEN ERROR222
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	brine process capacity to add
+:SCREEN ERROR223
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/(Year*Year)
+:SCREEN ERROR224
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR225
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!TIME TO AVERAGE ORDERS=
+:SCREEN ERROR226
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0.75
+:SCREEN ERROR227
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	yr
+:SCREEN ERROR228
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	0.25
+:SCREEN ERROR229
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR230
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!brine conc capacity to add=
+!*	MAX((targeted brine conc capacity-Direct Extraction Capacity)/TIME TO BUILD MINING CAPA
+:SCREEN ERROR231
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/(Year*yr)
+!*	~	The integer function rounds down
+!*		integer(0.5+MAX(0,targeted brine conc capacity-total conc 		capacity)/CAPACITY MODULE SIZE)*CAPAC\
+ITY MODULE SIZE
+:SCREEN ERROR232
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR233
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!new investment=
+:SCREEN ERROR234
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	brine conc capacity to add
+:SCREEN ERROR235
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/(Year*Year)
+!*	~	DELAY1(brine conc capacity to add/per year
+:SCREEN ERROR236
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR237
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!TIME TO CORRECT BACKLOG=
+:SCREEN ERROR238
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0.25
+:SCREEN ERROR239
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	yr
+:SCREEN ERROR240
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	0.25
+:SCREEN ERROR241
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR242
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Backlog= INTEG (
+:SCREEN ERROR243
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	new orders-processed orders
+:SCREEN ERROR244
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		INIT DEMAND*per year/1)
+:SCREEN ERROR245
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+:SCREEN ERROR246
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	INIT DEMAND*per year
+:SCREEN ERROR247
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR248
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!backlog correction=
+:SCREEN ERROR249
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	(Backlog-desired backlog)/TIME TO CORRECT BACKLOG
+:SCREEN ERROR250
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+:SCREEN ERROR251
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR252
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!process capacity to add=
+!*	MAX((targeted process capacity-Processing Capacity)/TIME TO BUILD REFIN CAPA
+:SCREEN ERROR253
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/(Year*yr)
+:SCREEN ERROR254
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR255
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!mine capacity to add 0=
+!*	MAX((targeted mining capacity 0-Concentrate Capacity)/TIME TO BUILD MINING CAPA
+:SCREEN ERROR256
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/(Year*yr)
+:SCREEN ERROR257
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR258
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!potential production=
+:SCREEN ERROR259
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	Brine Processing Capacity+Installed Geo Li Conversion Capa+Processing Capacity
+:SCREEN ERROR260
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+:SCREEN ERROR261
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Potential capacity
+:SCREEN ERROR262
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR263
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!years of operation=
+:SCREEN ERROR264
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	Time - 2020
+:SCREEN ERROR265
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Year
+:SCREEN ERROR266
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR267
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!production capa=
+!*	Installed Geo Li Concentrating Capa*LOOKUP EXTRAPOLATE(FAST RAMP UP CURVE
+:SCREEN ERROR268
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR269
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Using a growth ramp for the 1st 5 years for production capacity
+:SCREEN ERROR270
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR271
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!oneyear=
+:SCREEN ERROR272
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	1
+:SCREEN ERROR273
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	yr
+:SCREEN ERROR274
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR275
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!dollarperton=
+:SCREEN ERROR276
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	1
+:SCREEN ERROR277
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	$/ton
+:SCREEN ERROR278
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR279
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!effective scenario=
+!*	IF THEN ELSE(SCENARIO CHOICE=1,LOOKUP EXTRAPOLATE(NPS SCENARIO, Time/one year),LOOKUP EXTRAPOLATE	\
+	(EV30 SCENARIO, Time/one year))
+:SCREEN ERROR280
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+:SCREEN ERROR281
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR282
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!one year=
+:SCREEN ERROR283
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	1
+:SCREEN ERROR284
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	yr
+:SCREEN ERROR285
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR286
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!li from geo=
+!*	MIN(Geo Li Inventory/SHIPPING TIME,Installed Geo Li Conversion Capa)
+:SCREEN ERROR287
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR288
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR289
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Year of New Investment= INTEG (
+:SCREEN ERROR290
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	tracking-resetting year
+:SCREEN ERROR291
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		0)
+:SCREEN ERROR292
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Year
+:SCREEN ERROR293
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR294
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!"GEOTHERMAL ON?"=
+:SCREEN ERROR295
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	1
+:SCREEN ERROR296
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR297
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR298
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Li in Geo Ion Exchange= INTEG (
+:SCREEN ERROR299
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	geo extraction-lost in geo ion exchange-to geo conversion
+:SCREEN ERROR300
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		0)
+:SCREEN ERROR301
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+:SCREEN ERROR302
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR303
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!from conversion=
+:SCREEN ERROR304
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	CONVERSION RECOVERY RATE*to geo conversion
+:SCREEN ERROR305
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR306
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR307
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!total supply=
+:SCREEN ERROR308
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	brine li to be sold+li from ore+"GEOTHERMAL ON?"*li from geo
+:SCREEN ERROR309
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+:SCREEN ERROR310
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR311
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!annual profit=
+:SCREEN ERROR312
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	li from geo*(Price-UNIT OPEX)
+:SCREEN ERROR313
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	$/Year
+:SCREEN ERROR314
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR315
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!DISCOUNT RATE=
+:SCREEN ERROR316
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0.08
+:SCREEN ERROR317
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	1/yr
+:SCREEN ERROR318
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Papers shared by Parans
+:SCREEN ERROR319
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR320
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Remaining Imperial Li Reserve= INTEG (
+:SCREEN ERROR321
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	-geo extraction
+:SCREEN ERROR322
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		IMPERIAL LI RESERVE)
+:SCREEN ERROR323
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+:SCREEN ERROR324
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR325
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!lost in geo ion exchange=
+:SCREEN ERROR326
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	(1-ION EXCHANGE RECOVERY)*Li in Geo Ion Exchange/per year
+:SCREEN ERROR327
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR328
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR329
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!to geo conversion=
+:SCREEN ERROR330
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	ION EXCHANGE RECOVERY*Li in Geo Ion Exchange/per year
+:SCREEN ERROR331
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR332
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR333
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Installed Geo Li Conversion Capa= INTEG (
+:SCREEN ERROR334
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	adding geo conversion capa
+:SCREEN ERROR335
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		0)
+:SCREEN ERROR336
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR337
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR338
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!resetting year=
+:SCREEN ERROR339
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	"start new investment?"*Year of New Investment/TIME STEP
+:SCREEN ERROR340
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR341
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR342
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Geo Li Inventory= INTEG (
+:SCREEN ERROR343
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	from conversion-li from geo
+:SCREEN ERROR344
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		0)
+:SCREEN ERROR345
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+:SCREEN ERROR346
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR347
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!tracking=
+:SCREEN ERROR348
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	time to start new investment/TIME STEP
+:SCREEN ERROR349
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR350
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR351
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!geo extraction=
+!*	MIN(ave li amount extracted per yr,production capa)
+:SCREEN ERROR352
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR353
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR354
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!LI CONVERSION CAPA MODULE=
+:SCREEN ERROR355
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	20000
+:SCREEN ERROR356
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR357
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	According to Parans papers - 20000
+:SCREEN ERROR358
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR359
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!time to start new investment=
+!*	IF THEN ELSE("start new investment?"=0
+:SCREEN ERROR360
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Year
+:SCREEN ERROR361
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR362
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!actual capex=
+!*	IF THEN ELSE( Time = 2020 :OR: Time = Year of New Investment
+:SCREEN ERROR363
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	$
+:SCREEN ERROR364
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR365
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!CAPEX=
+:SCREEN ERROR366
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	5.23e+007
+:SCREEN ERROR367
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	$
+:SCREEN ERROR368
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	https://www.energy.gov/eere/geothermal/geothermal-faqs#cost_to_develop_geothermal_pow		er_plant
+!*		$2500/kW
+:SCREEN ERROR369
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		41840000 - low
+:SCREEN ERROR370
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		62700000 - high
+:SCREEN ERROR371
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		
+!*		Value correspond to 22,000mt/yr worth of capacity - 90 e+007 - 
+:SCREEN ERROR372
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		6199200
+:SCREEN ERROR373
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		2.7678e+006
+:SCREEN ERROR374
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		46200
+:SCREEN ERROR375
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR376
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!ave li amount extracted per yr=
+:SCREEN ERROR377
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	AVE IMPERIAL LI CONCENTRATION*ave q of imperial per yr
+:SCREEN ERROR378
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR379
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR380
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!FAST RAMP UP CURVE(
+!*	[(0,0)-(2,1)],(0,0),(0.5,0.7),(1,0.95),(1.5,1),(2,1))
+:SCREEN ERROR381
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR382
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR383
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Installed Geo Li Concentrating Capa= INTEG (
+:SCREEN ERROR384
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	adding capacity
+:SCREEN ERROR385
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		0)
+:SCREEN ERROR386
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR387
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR388
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!AVE IMPERIAL LI CONCENTRATION=
+:SCREEN ERROR389
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0.000196
+:SCREEN ERROR390
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/(m*m*m)
+!*	~	Based on geothermal database provided by Neupane
+:SCREEN ERROR391
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR392
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!UNIT OPEX=
+:SCREEN ERROR393
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	4000
+:SCREEN ERROR394
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	$/ton
+!*	~	Source: Argus Metals - 6875 2020
+:SCREEN ERROR395
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		scenario from 5500 to 7500
+:SCREEN ERROR396
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		Selective Recovery of Lithium from Geothermal Brines - 4000
+!*		low = 3200
+:SCREEN ERROR397
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR398
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!IMPERIAL GEOTHERMAL CAPACITY=
+:SCREEN ERROR399
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	650
+:SCREEN ERROR400
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	MW
+:SCREEN ERROR401
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Data from EIA.gov - Name of the geo plant
+:SCREEN ERROR402
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR403
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!IMPERIAL LI RESERVE=
+:SCREEN ERROR404
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	3.74e+007
+:SCREEN ERROR405
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+:SCREEN ERROR406
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Calculated from reservoir volume * ave Li concentration
+:SCREEN ERROR407
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR408
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!ave q of imperial per yr=
+:SCREEN ERROR409
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	AVE Q PER MW PER YR*IMPERIAL GEOTHERMAL CAPACITY
+:SCREEN ERROR410
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	m*m*m/Year
+:SCREEN ERROR411
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR412
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!AVE Q PER MW PER YR=
+:SCREEN ERROR413
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	452500*365*0.00378541
+:SCREEN ERROR414
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	m*m*m/MW/Year
+!*	~	Min Q: 393000 gal/MW/day
+:SCREEN ERROR415
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR416
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!PCT ORE SUPPLY TABLE(
+!*	[(4000,0)-(9500,1)],(4000,0),(4900,0.02),(5000,0.44),(5400,0.54),(5600,0.58),(6400,0.59		),(6700,0\
+.79),(7000,0.88),(8000,0.92),(9000,1),(9500,1))
+:SCREEN ERROR417
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR418
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Roskill
+:SCREEN ERROR419
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR420
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!ADJUSTMENT TABLE(
+!*	[(-2,0)-(5,0.6)],(-2,0),(-1,0),(0,0),(1,0.5),(2,0.33),(3,0.25),(4,0.2),(5,0.1))
+:SCREEN ERROR421
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR422
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR423
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!PCT BRINE SUPPLY TABLE(
+!*	[(4000,0)-(6500,1)],(4000,0),(4200,0.03),(4400,0.15),(4800,0.24),(5100,0.28),(5200,0.3		),(5400,0.\
+38),(5500,0.41),(6400,0.76),(6500,1))
+:SCREEN ERROR424
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR425
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Roskill
+:SCREEN ERROR426
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR427
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Non EV Demand growth=
+:SCREEN ERROR428
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	Non EV Demand*NON EV DEMAND GROWTH RATE/per year
+:SCREEN ERROR429
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr/yr
+:SCREEN ERROR430
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR431
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!NPS SCENARIO(
+!*	[(2000,0)-(2030,800000)],(2000,300),(2001,652),(2002,1158),(2003,1530),(2004,2706),(		2005,6740),(\
+2006,8062),(2007,11214),(2008,9780),(2009,8958),(2010,8470),(2011,8979)		,(2012,14991),(2013,18033),\
+(2014,17198),(2015,17378),(2016,24635),(2017,39637),(2018		,73052),(2019,79373),(2020,139770),(2021,\
+201950),(2022,291520),(2023,351253),(2024,		406070),(2025,511803),(2026,562167),(2027,606980),(2028,\
+700649),(2029,735403),(2030		,742596))
+:SCREEN ERROR432
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+!*	~	Data from EV scenarios
+!*		[(2020,0)-(2030,800000)],(2020,139770),(2021,201950),(2022,291520),(2023,351253),(202		4,406070),\
+(2025,511803),(2026,562167),(2027,606980),(2028,700649),(2029,735		403),(2030,742596)
+!*		[(2010,0)-(2030,800000)],(2010,8470),(2011,8979),(2012,14991),(2013,18033),		(2014,17198),(2015,1\
+7378),(2016,24635),(2017,39637),(2018,73052),(2019,7937		3),(2020,139770),(2021,201950),(2022,291520\
+),(2023,351253),(2024,406070),(2		025,511803),(2026,562167),(2027,606980),(2028,700649),(2029,735403\
+),(2030,7		42596)
+:SCREEN ERROR433
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR434
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!li lost in evap process= DELAY FIXED (
+!*	(1-CONC RECOVERY RATE)*brine extraction
+:SCREEN ERROR435
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR436
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Initial value = 5000 ton/yr
+:SCREEN ERROR437
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR438
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!CAPACITY MODULE SIZE=
+:SCREEN ERROR439
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	10000
+:SCREEN ERROR440
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR441
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR442
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!li concentrate= DELAY FIXED (
+!*	CONC RECOVERY RATE*brine extraction
+:SCREEN ERROR443
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR444
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Initial value = 30000 ton/yr
+:SCREEN ERROR445
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR446
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!EV30 SCENARIO(
+!*	[(2000,0)-(2030,800000)],(2000,300),(2001,652),(2002,1158),(2003,1530),(2004,2706),(		2005,6740),(\
+2006,8062),(2007,11214),(2008,9780),(2009,8958),(2010,8470),(2011,8979)		,(2012,14991),(2013,18033),\
+(2014,17198),(2015,17378),(2016,24635),(2017,39637),(2018		,73052),(2019,79373),(2020,142927),(2021,\
+284112),(2022,476502),(2023,630443),(2024,		781868),(2025,1.04564e+006),(2026,1.21006e+006),(2027,1.\
+37163e+006),(2028,1.67944e+006		),(2029,1.84987e+006),(2030,2.023e+006))
+:SCREEN ERROR447
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+!*	~	Data from EV scenarios
+!*		[(2020,0)-(2030,800000)],(2020,142927),(2021,284112),(2022,476502),(2023,630443),(202		4,781868),\
+(2025,1.04564e+006),(2026,1.21006e+006),(2027,1.37163e+006),(2028		,1.67944e+006),(2029,1.84987e+006\
+),(2030,2.023e+006)
+!*		[(2010,0)-(2030,800000)],(2010,8470),(2011,8979),(2012,14991),(2013,18033),		(2014,17198),(2015,1\
+7378),(2016,24635),(2017,39637),(2018,73052),(2019,7937		3),(2020,142927),(2021,284112),(2022,476502\
+),(2023,630443),(2024,781868),(2		025,1.04564e+006),(2026,1.21006e+006),(2027,1.37163e+006),(2028,1.\
+67944e+00		6),(2029,1.84987e+006),(2030,2.023e+006)
+:SCREEN ERROR448
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR449
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Li in Ion Exchange= INTEG (
+:SCREEN ERROR450
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	direct extraction-li conc from ion exchange-li lost in ion exchange
+:SCREEN ERROR451
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		100000)
+:SCREEN ERROR452
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+:SCREEN ERROR453
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	direct extraction*per year
+:SCREEN ERROR454
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR455
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!desired supply and capacity ratio=
+:SCREEN ERROR456
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	tentative brine extraction quantity evap method/total conc capacity
+:SCREEN ERROR457
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR458
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR459
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Direct Extraction Capacity= INTEG (
+:SCREEN ERROR460
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	new investment
+:SCREEN ERROR461
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		INIT DIRECT EXTRACTION)
+:SCREEN ERROR462
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR463
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR464
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!brine extraction=
+:SCREEN ERROR465
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	tentative brine extraction quantity evap method*evap capacity share*CONC RECOVERY RATE
+:SCREEN ERROR466
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR467
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	tentative brine extraction quantity evap method*evap capacity share/CONC 		RECOVERY RATE
+:SCREEN ERROR468
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR469
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!ION EXCHANGE RECOVERY=
+:SCREEN ERROR470
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0.95
+:SCREEN ERROR471
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR472
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR473
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!CAPACITY TIME=
+:SCREEN ERROR474
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	25
+:SCREEN ERROR475
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Year
+:SCREEN ERROR476
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Assumed
+:SCREEN ERROR477
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR478
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!total conc capacity=
+:SCREEN ERROR479
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	Evaporation Capacity+Direct Extraction Capacity
+:SCREEN ERROR480
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR481
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR482
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!INIT BRINE RESERVE=
+:SCREEN ERROR483
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	ALBERMALE RESERVE+GALAXY LITHIUM RESERVE+OROCOBRE RESERVE+QINGHAI SALTLAKE+SQM RESERVE		+TIBET ZHAB\
+UYE+LIVENT CAUCHARI RESERVE+LIVENT HOMBRE MUERTO RESOURCE
+:SCREEN ERROR484
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+:SCREEN ERROR485
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR486
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!li lost in ion exchange=
+:SCREEN ERROR487
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	(1-ION EXCHANGE RECOVERY)*Li in Ion Exchange/per year
+:SCREEN ERROR488
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR489
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR490
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!evap capacity share=
+:SCREEN ERROR491
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	Evaporation Capacity/total conc capacity
+:SCREEN ERROR492
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR493
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR494
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!CONC RECOVERY RATE=
+:SCREEN ERROR495
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0.91
+:SCREEN ERROR496
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR497
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR498
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!retired evap capacity=
+:SCREEN ERROR499
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	Evaporation Capacity/CAPACITY TIME
+:SCREEN ERROR500
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/(Year*Year)
+:SCREEN ERROR501
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR502
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!li conc from ion exchange=
+!*	MIN(Direct Extraction Capacity,Li in Ion Exchange*ION EXCHANGE RECOVERY/per year)
+:SCREEN ERROR503
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR504
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR505
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!evap time=
+:SCREEN ERROR506
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	1.5
+:SCREEN ERROR507
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Year
+:SCREEN ERROR508
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR509
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!ALBERMALE RESERVE=
+:SCREEN ERROR510
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	210000
+:SCREEN ERROR511
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+!*	~	Roskill
+:SCREEN ERROR512
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR513
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!INIT EVAP CAPACITY=
+:SCREEN ERROR514
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	121500
+:SCREEN ERROR515
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+!*	~	Including SQM
+:SCREEN ERROR516
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR517
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!OROCOBRE RESERVE=
+:SCREEN ERROR518
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	6.42e+006
+:SCREEN ERROR519
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+!*	~	Roskill
+:SCREEN ERROR520
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR521
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Remaining Brine Reserve= INTEG (
+:SCREEN ERROR522
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	-brine extraction-direct extraction
+:SCREEN ERROR523
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		INIT BRINE RESERVE)
+:SCREEN ERROR524
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+:SCREEN ERROR525
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR526
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Evaporation Capacity= INTEG (
+:SCREEN ERROR527
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	-retired evap capacity
+:SCREEN ERROR528
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		INIT EVAP CAPACITY)
+:SCREEN ERROR529
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR530
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR531
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!QINGHAI SALTLAKE=
+:SCREEN ERROR532
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	7.2e+006
+:SCREEN ERROR533
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+!*	~	Roskill
+:SCREEN ERROR534
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR535
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!tentative mining quantity=
+:SCREEN ERROR536
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	potential ore supply curve*PHYSICAL RECOVERY RATE*CHEMICAL RECOVERY RATE
+:SCREEN ERROR537
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR538
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	potential ore supply curve/PHYSICAL RECOVERY RATE/CHEMICAL RECOVERY RATE
+:SCREEN ERROR539
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR540
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!PURIFICATION TIME=
+:SCREEN ERROR541
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	1/24
+:SCREEN ERROR542
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Year
+:SCREEN ERROR543
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Assumed half a month
+:SCREEN ERROR544
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR545
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!TABLE CONVERSION1(
+!*	[(0,0)-(1,1)],(0,0),(0.001,0),(0.002,0),(0.003,0),(0.004,0),(0.005,0.95),(0.06,1),(0.1		,1),(1,1))
+:SCREEN ERROR546
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR547
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Quality check of Li concentration to move to conversion
+:SCREEN ERROR548
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR549
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!PURIFICATION RECOVERY RATE=
+:SCREEN ERROR550
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0.97
+:SCREEN ERROR551
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR552
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Assumed
+:SCREEN ERROR553
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR554
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!LIVENT CAUCHARI RESERVE=
+!*	IF THEN ELSE(Time>=2020
+:SCREEN ERROR555
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+:SCREEN ERROR556
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Roskill Table 63
+:SCREEN ERROR557
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR558
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!DEMAND ADJUSTMENT TIME=
+:SCREEN ERROR559
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0.25
+:SCREEN ERROR560
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Year
+:SCREEN ERROR561
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR562
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Li demand from EV=
+:SCREEN ERROR563
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	effective scenario
+:SCREEN ERROR564
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+:SCREEN ERROR565
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR566
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Li to be refined=
+!*	MIN(Processing Capacity*CHEMICAL RECOVERY RATE,Concentrate at Conversion/ORE PROCESSING TIME		)
+:SCREEN ERROR567
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+:SCREEN ERROR568
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Constrained by processing capacity
+!*		MIN(Processing Capacity/CHEMICAL RECOVERY RATE,Concentrate at 		Conversion/ORE PROCESSING TIME)
+:SCREEN ERROR569
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR570
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Brine Processing Capacity= INTEG (
+:SCREEN ERROR571
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	brine process capacity growth
+:SCREEN ERROR572
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		INIT BRINE PROCESSING CAPACITY)
+:SCREEN ERROR573
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR574
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR575
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!INIT DIRECT EXTRACTION=
+:SCREEN ERROR576
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	20000
+:SCREEN ERROR577
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR578
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR579
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!ION EXCHANGE PRODUCTION=
+:SCREEN ERROR580
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0
+:SCREEN ERROR581
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR582
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR583
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!ION EXCHANGE TIME=
+:SCREEN ERROR584
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	1/12
+:SCREEN ERROR585
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Year
+:SCREEN ERROR586
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR587
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!INIT BRINE PROCESSING CAPACITY=
+:SCREEN ERROR588
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	50000
+:SCREEN ERROR589
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+!*	~	Roskill
+:SCREEN ERROR590
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR591
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!brine li to be sold=
+:SCREEN ERROR592
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	Hydroxide or Carbonate Inventory/SHIPPING TIME
+:SCREEN ERROR593
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+:SCREEN ERROR594
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR595
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!refining=
+:SCREEN ERROR596
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	Li to be refined*CHEMICAL RECOVERY RATE
+:SCREEN ERROR597
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR598
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR599
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!li from ore=
+:SCREEN ERROR600
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	Refined Li Inventory/SHIPPING TIME
+:SCREEN ERROR601
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR602
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR603
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!EVAPORATION PRODUCTION=
+:SCREEN ERROR604
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0
+:SCREEN ERROR605
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR606
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR607
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!SHIPPING TIME=
+:SCREEN ERROR608
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0.75
+:SCREEN ERROR609
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Year
+:SCREEN ERROR610
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR611
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!ION EXCHANGE RECOVERY RATE=
+:SCREEN ERROR612
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0.93
+:SCREEN ERROR613
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+!*	~	Assumed
+:SCREEN ERROR614
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR615
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!per year=
+:SCREEN ERROR616
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	1
+:SCREEN ERROR617
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Year
+:SCREEN ERROR618
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR619
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!ALLIANCE MINERAL BALD HILL RESERVE=
+:SCREEN ERROR620
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	130000
+:SCREEN ERROR621
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+!*	~	LCE
+:SCREEN ERROR622
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR623
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!ALTURA MINING RESERVE=
+:SCREEN ERROR624
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	880000
+:SCREEN ERROR625
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+!*	~	LCE
+:SCREEN ERROR626
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR627
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!GALAXY LITHIUM RESERVE=
+:SCREEN ERROR628
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	1.14e+006
+:SCREEN ERROR629
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+!*	~	LCE
+:SCREEN ERROR630
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR631
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!PHYSICAL RECOVERY RATE=
+:SCREEN ERROR632
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0.9
+:SCREEN ERROR633
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR634
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR635
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!BIKITA MINERALS RESERVE=
+:SCREEN ERROR636
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	370000
+:SCREEN ERROR637
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+!*	~	LCE
+:SCREEN ERROR638
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR639
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!REFINING CAPA BUFFER =
+:SCREEN ERROR640
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	1.2
+:SCREEN ERROR641
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR642
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR643
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!processed ore=
+:SCREEN ERROR644
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	rock mining*PHYSICAL RECOVERY RATE
+:SCREEN ERROR645
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR646
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR647
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!CATL LA CORNE RESERVE=
+:SCREEN ERROR648
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	400000
+:SCREEN ERROR649
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+!*	~	LCE
+:SCREEN ERROR650
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR651
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!PILBARA MINERALS RESERVES=
+:SCREEN ERROR652
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	2.52e+006
+:SCREEN ERROR653
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+!*	~	Roskill Table 257
+:SCREEN ERROR654
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR655
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!JIANGXI RESERVE=
+:SCREEN ERROR656
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	950000
+:SCREEN ERROR657
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+!*	~	LCE
+:SCREEN ERROR658
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR659
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!CONVERSION RECOVERY RATE=
+:SCREEN ERROR660
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0.92
+:SCREEN ERROR661
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR662
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR663
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!converted quantity comparison=
+:SCREEN ERROR664
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	Concentrate at Conversion/ORE PROCESSING TIME/Processing Capacity
+:SCREEN ERROR665
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR666
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR667
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!to refinery=
+:SCREEN ERROR668
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	Concentrate Inventory/ORE PROCESSING TIME
+:SCREEN ERROR669
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR670
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR671
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!ORE PROCESSING TIME=
+:SCREEN ERROR672
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0.4
+:SCREEN ERROR673
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Year
+:SCREEN ERROR674
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR675
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!KELIBER RESERVE=
+:SCREEN ERROR676
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	122000
+:SCREEN ERROR677
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+!*	~	LCE
+:SCREEN ERROR678
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR679
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!GALAXY MTCATTLIN RESERVE=
+:SCREEN ERROR680
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	198384
+:SCREEN ERROR681
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+!*	~	LCE
+:SCREEN ERROR682
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR683
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!TALISON GREENBUSHES RESERVE=
+:SCREEN ERROR684
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	4.27e+006
+:SCREEN ERROR685
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+!*	~	LCE
+:SCREEN ERROR686
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR687
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!INIT PROCESSING CAPACITY=
+:SCREEN ERROR688
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	25000
+:SCREEN ERROR689
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+!*	~	Roskill
+:SCREEN ERROR690
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR691
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!TIBET ZHABUYE=
+:SCREEN ERROR692
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	1.83e+006
+:SCREEN ERROR693
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+!*	~	LCE
+:SCREEN ERROR694
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR695
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!CHEMICAL RECOVERY RATE=
+:SCREEN ERROR696
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0.92
+:SCREEN ERROR697
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR698
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR699
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!TIME TO BUILD REFIN CAPA=
+:SCREEN ERROR700
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	4
+:SCREEN ERROR701
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	yr
+:SCREEN ERROR702
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR703
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!LIVENT HOMBRE MUERTO RESOURCE=
+:SCREEN ERROR704
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	4.22e+006
+:SCREEN ERROR705
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+!*	~	LCE
+:SCREEN ERROR706
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR707
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!resetting 2=
+!*	IF THEN ELSE(Observe Continuous Demand Growth>3 :OR: counting 2=0,Observe Continuous Demand Growth\
+		,0)/TIME STEP
+:SCREEN ERROR708
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	1/yr
+:SCREEN ERROR709
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR710
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!SQM RESERVE=
+:SCREEN ERROR711
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	4.551e+007
+:SCREEN ERROR712
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+!*	~	LCE
+:SCREEN ERROR713
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR714
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!NEMASKA LITHIUM WABOUCHI RESERVE=
+:SCREEN ERROR715
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	1.28e+006
+:SCREEN ERROR716
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+!*	~	LCE
+:SCREEN ERROR717
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR718
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!MINERAL RESOURCES WODGINA RESERVE=
+:SCREEN ERROR719
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	320000
+:SCREEN ERROR720
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+!*	~	LCE
+:SCREEN ERROR721
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR722
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Observe Continuous Demand Growth= INTEG (
+:SCREEN ERROR723
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	counting 2-resetting 2
+:SCREEN ERROR724
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		0)
+:SCREEN ERROR725
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR726
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR727
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!total reserve=
+:SCREEN ERROR728
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	ALLIANCE MINERAL BALD HILL RESERVE+ALTURA MINING RESERVE + BIKITA MINERALS RESERVE +		 CATL LA CORN\
+E RESERVE+GALAXY MTCATTLIN RESERVE + JIANGXI RESERVE + MINERAL RESOURCES WODGINA RESERVE		 + NEMASKA\
+ LITHIUM WABOUCHI RESERVE + PILBARA MINERALS RESERVES +TALISON GREENBUSHES RESERVE
+:SCREEN ERROR729
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+:SCREEN ERROR730
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR731
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Processing Capacity= INTEG (
+:SCREEN ERROR732
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	Processing capacity growth
+:SCREEN ERROR733
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		INIT PROCESSING CAPACITY)
+:SCREEN ERROR734
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR735
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR736
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Remaining Reserve= INTEG (
+:SCREEN ERROR737
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	-rock mining
+:SCREEN ERROR738
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		total reserve)
+:SCREEN ERROR739
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton
+:SCREEN ERROR740
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR741
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!days per year=
+:SCREEN ERROR742
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	365
+:SCREEN ERROR743
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	day/yr
+:SCREEN ERROR744
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR745
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!origin time=
+:SCREEN ERROR746
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0
+:SCREEN ERROR747
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	day
+:SCREEN ERROR748
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR749
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!INIT MINING CAPACITY=
+:SCREEN ERROR750
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	20000
+:SCREEN ERROR751
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+!*	~	269302
+:SCREEN ERROR752
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR753
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!MINING CAPA BUFFER FACTOR=
+:SCREEN ERROR754
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	1.2
+:SCREEN ERROR755
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR756
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR757
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!TIME TO BUILD MINING CAPA=
+:SCREEN ERROR758
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	3
+:SCREEN ERROR759
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	yr
+:SCREEN ERROR760
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR761
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Concentrate Capacity= INTEG (
+:SCREEN ERROR762
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	Concentrate capacity growth
+:SCREEN ERROR763
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		INIT MINING CAPACITY)
+:SCREEN ERROR764
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR765
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR766
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!SCENARIO CHOICE=
+:SCREEN ERROR767
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	1
+:SCREEN ERROR768
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+!*	~	1 for NPS
+:SCREEN ERROR769
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR770
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!NON EV DEMAND GROWTH RATE=
+:SCREEN ERROR771
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0.03
+:SCREEN ERROR772
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR773
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR774
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Non EV Demand= INTEG (
+:SCREEN ERROR775
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	Non EV Demand growth
+:SCREEN ERROR776
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		INIT NON EV DEMAND)
+:SCREEN ERROR777
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+:SCREEN ERROR778
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR779
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!INIT NON EV DEMAND=
+:SCREEN ERROR780
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	174922
+:SCREEN ERROR781
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+!*	~	Lithium Outlook to 2028 - Table 18
+:SCREEN ERROR782
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR783
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!total theoretical Li demand=
+:SCREEN ERROR784
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	Li demand from EV+Non EV Demand
+:SCREEN ERROR785
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/yr
+:SCREEN ERROR786
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR787
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!INIT PRICE=
+:SCREEN ERROR788
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	1460
+:SCREEN ERROR789
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	$/ton
+:SCREEN ERROR790
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	6850 - price in 2020
+:SCREEN ERROR791
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		6500 - price in 2015
+:SCREEN ERROR792
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		5180 - price in 2010
+:SCREEN ERROR793
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		UGS Source
+:SCREEN ERROR794
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR795
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!DMD ELASTICITY=
+:SCREEN ERROR796
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0.54
+:SCREEN ERROR797
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	dmnl
+:SCREEN ERROR798
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	-.54 Desormeaux reference
+:SCREEN ERROR799
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR800
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!INIT DEMAND=
+:SCREEN ERROR801
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	65000
+:SCREEN ERROR802
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	ton/Year
+:SCREEN ERROR803
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	125000 		https://www.researchgate.net/publication/316747087_Tracing_global_lithium_f		low_A_trade\
+-linked_material_flow_analysis/figures?lo=1
+:SCREEN ERROR804
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		Roskill 192300
+:SCREEN ERROR805
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		Roskill 2000 - 65000 Table 47
+:SCREEN ERROR806
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR807
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Price= INTEG (
+:SCREEN ERROR808
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	chg in price
+:SCREEN ERROR809
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		INIT PRICE)
+:SCREEN ERROR810
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	$/ton
+:SCREEN ERROR811
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR812
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!STANDARD BACKLOG TIME=
+:SCREEN ERROR813
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0.875
+:SCREEN ERROR814
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	yr
+:SCREEN ERROR815
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~		|
+!
+:SCREEN ERROR816
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!TIME TO ADJUST PRICE=
+:SCREEN ERROR817
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	0.85
+:SCREEN ERROR818
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	yr
+:SCREEN ERROR819
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	0.4
+:SCREEN ERROR820
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR821
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!********************************************************
+:SCREEN ERROR822
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	.Control
+:SCREEN ERROR823
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!********************************************************~
+:SCREEN ERROR824
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!		Simulation Control Parameters
+:SCREEN ERROR825
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR826
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!FINAL TIME  = 2030
+:SCREEN ERROR827
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Year
+:SCREEN ERROR828
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	The final time for the simulation.
+:SCREEN ERROR829
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR830
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!INITIAL TIME  = 2005
+:SCREEN ERROR831
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	Year
+:SCREEN ERROR832
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	The initial time for the simulation.
+:SCREEN ERROR833
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR834
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!SAVEPER  = 0.125
+!*	~	Year [0,?]
+:SCREEN ERROR835
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	The frequency with which output is stored.
+:SCREEN ERROR836
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR837
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!TIME STEP  = 0.125
+!*	~	Year [0,?]
+:SCREEN ERROR838
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	~	The time step for the simulation.
+:SCREEN ERROR839
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!	|
+!
+:SCREEN ERROR840
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!\\\---/// Sketch information - do not modify anything except names
+:SCREEN ERROR841
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!V300  Do not put anything below this section - it will be ignored
+:SCREEN ERROR842
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!*Market
+!*$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,100,0
+!*10,1,Price,759,191,40,20,3,3,0,0,0,0,0,0
+!*12,2,48,757,520,10,8,0,3,0,0,-1,0,0,0
+!*1,3,5,1,4,0,0,22,0,0,0,-1--1--1,,1|(755,270)|
+!*1,4,5,2,100,0,0,22,0,0,0,-1--1--1,,1|(755,426)|
+!*11,5,48,755,335,8,6,33,3,0,0,4,0,0,0
+!*10,6,chg in price,806,335,43,11,40,3,0,0,-1,0,0,0
+!*10,7,price year before,934,76,60,11,8,3,0,0,0,0,0,0
+!*10,8,TIME TO ADJUST PRICE,1422,341,49,22,8,131,0,0,0,0,0,0
+!*1,9,1,6,1,0,0,0,0,64,0,-1--1--1,,1|(829,265)|
+!*10,10,adjusted demand,1063,462,60,11,8,3,0,0,0,0,0,0
+!*10,11,DMD ELASTICITY,1158,251,53,19,8,3,0,0,0,0,0,0
+!*1,12,11,48,1,0,0,0,0,64,0,-1--1--1,,1|(1079,319)|
+!*1,13,1,7,1,0,0,0,0,64,0,-1--1--1,,1|(822,103)|
+!*1,14,1,48,1,0,0,0,0,64,0,-1--1--1,,1|(861,201)|
+!*1,15,7,48,1,0,0,0,0,64,0,-1--1--1,,1|(988,193)|
+!*10,16,new price,584,496,38,11,8,3,0,0,0,0,0,0
+!*10,17,posted demand,1052,621,55,11,8,3,0,0,0,0,0,0
+!*1,18,10,17,1,0,0,0,0,64,0,-1--1--1,,1|(1090,538)|
+!*1,19,16,6,1,0,0,0,0,64,0,-1--1--1,,1|(731,427)|
+!*1,20,8,17,1,0,0,0,0,64,0,-1--1--1,,1|(1277,584)|
+!*10,21,potential brine supply curve,681,-13,50,19,8,3,0,0,0,0,0,0
+!*10,22,INIT PRICE,417,105,42,11,8,3,0,0,-1,0,0,0
+!*1,23,22,1,0,0,0,0,0,64,1,-1--1--1,,1|(582,145)|
+!*10,24,potential ore supply curve,846,-15,47,19,8,3,0,0,0,0,0,0
+!*10,25,total supply,352,605,63,25,8,131,0,0,0,0,0,0
+!*1,26,1,24,1,0,0,0,0,64,0,-1--1--1,,1|(722,113)|
+!*10,27,brine li to be sold,223,803,70,9,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,28,li from ore,182,502,49,33,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,29,27,25,0,0,0,0,0,64,0,-1--1--1,,1|(279,717)|
+!*1,30,28,25,0,0,0,0,0,64,0,-1--1--1,,1|(265,551)|
+!*10,31,PCT ORE SUPPLY TABLE,933,-259,67,19,8,131,0,0,0,0,0,0
+!*10,32,PCT BRINE SUPPLY TABLE,539,-244,53,21,8,131,0,0,0,0,0,0
+!*10,33,Brine Processing Capacity,714,-217,58,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,34,33,21,1,0,0,0,0,64,0,-1--1--1,,1|(648,-131)|
+!*10,35,Processing Capacity,850,-204,40,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,36,35,24,1,0,0,0,0,64,0,-1--1--1,,1|(893,-120)|
+!*10,37,"GEOTHERMAL ON?",172,435,56,19,8,3,0,0,0,0,0,0
+!*10,38,li from geo,185,674,49,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,39,38,25,0,0,0,0,0,64,0,-1--1--1,,1|(246,649)|
+!*1,40,37,25,1,0,0,0,0,64,0,-1--1--1,,1|(271,447)|
+!*10,41,Price,2278,849,27,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,42,Time,2277,884,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,43,one year,2271,816,37,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,44,dollarperton,792,-148,39,11,8,3,0,0,0,0,0,0
+!*1,45,44,21,1,0,0,0,0,64,0,-1--1--1,,1|(703,-115)|
+!*1,46,44,24,1,0,0,0,0,64,0,-1--1--1,,1|(842,-82)|
+!*1,47,1,21,1,0,0,0,0,64,0,-1--1--1,,1|(658,115)|
+!*10,48,effect price demand,1000,318,36,19,8,3,0,0,0,0,0,0
+!*1,49,48,10,1,0,0,0,0,64,0,-1--1--1,,1|(1057,395)|
+!*10,50,TIME TO ADJUST PRICE,1664,647,60,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,51,DMD ELASTICITY,240,84,66,29,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,52,TIME TO ADJUST PRICE,873,476,60,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,53,52,6,1,0,0,0,0,64,0,-1--1--1,,1|(877,405)|
+!*1,54,25,56,1,0,0,0,0,64,0,-1--1--1,,1|(397,657)|
+!*1,55,1,16,1,0,0,0,0,64,0,-1--1--1,,1|(617,345)|
+!*10,56,adjusted supply,498,684,49,11,8,3,0,0,0,0,0,0
+!*10,57,price year before,570,94,37,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,58,8,7,1,0,0,0,0,64,0,-1--1--1,,1|(1164,72)|
+!*1,59,22,7,0,0,0,0,0,64,1,-1--1--1,,1|(659,91)|
+!*10,60,backlog pressure,200,320,32,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,61,EFFECT BACKLOG ON PRICEW,108,240,72,19,8,3,0,0,0,0,0,0
+!*10,62,multi,348,373,16,11,8,3,0,0,0,0,0,0
+!*1,63,61,62,1,0,0,0,0,64,0,-1--1--1,,1|(280,283)|
+!*1,64,60,62,1,0,0,0,0,64,0,-1--1--1,,1|(259,349)|
+!*1,65,62,16,1,0,0,0,0,64,0,-1--1--1,,1|(505,418)|
+!*10,66,LI SUPPLY TABLE,456,-22,41,19,8,3,0,0,0,0,0,0
+!*10,67,LI SUPPLY TABLE,1024,-37,45,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,68,32,21,1,0,0,0,0,64,0,-1--1--1,,1|(533,-89)|
+!*1,69,31,24,1,0,0,0,0,64,0,-1--1--1,,1|(963,-124)|
+!*10,70,adjusted demand based on supply,917,569,59,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128\
+-128
+!*1,71,70,10,1,0,0,0,0,64,0,-1--1--1,,1|(951,511)|
+!*10,72,total theoretical Li demand,872,719,62,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,73,72,17,1,0,0,0,0,64,1,-1--1--1,,1|(977,691)|
+:SCREEN ERROR843
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!\\\---/// Sketch information - do not modify anything except names
+:SCREEN ERROR844
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!V300  Do not put anything below this section - it will be ignored
+:SCREEN ERROR845
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!*Production from Brine
+!*$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,100,0
+!*10,1,Hydroxide or Carbonate Inventory,1871,-251,58,22,3,131,0,0,0,0,0,0
+!*12,2,48,2083,-250,10,8,0,3,0,0,-1,0,0,0
+!*1,3,5,2,4,0,0,22,0,0,0,-1--1--1,,1|(2041,-249)|
+!*1,4,5,1,100,0,0,22,0,0,0,-1--1--1,,1|(1963,-249)|
+!*11,5,48,2003,-249,6,8,34,3,0,0,1,0,0,0
+!*10,6,brine li to be sold,2003,-230,59,11,40,3,0,0,-1,0,0,0
+!*1,7,1,6,1,0,0,0,0,64,0,-1--1--1,,1|(1943,-201)|
+!*10,8,INIT BRINE RESERVE,414,-184,43,19,8,3,0,0,0,0,0,0
+!*10,9,SQM RESERVE,221,-48,95,6,8,131,0,0,0,0,0,0
+!*10,10,TIBET ZHABUYE,154,-80,83,24,8,131,0,0,0,0,0,0
+!*10,11,GALAXY LITHIUM RESERVE,183,-264,138,22,8,131,0,0,0,0,0,0
+!*1,12,9,8,0,0,0,0,0,64,0,-1--1--1,,1|(303,-106)|
+!*1,13,10,8,0,0,0,0,0,64,0,-1--1--1,,1|(287,-133)|
+!*1,14,11,8,0,0,0,0,0,64,0,-1--1--1,,1|(302,-223)|
+!*10,15,Remaining Brine Reserve,1135,-68,59,21,3,131,0,0,0,0,0,0
+!*10,16,potential brine supply curve,1109,-350,50,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-\
+128
+!*10,17,LIVENT HOMBRE MUERTO RESOURCE,159,-323,85,19,8,3,0,0,0,0,0,0
+!*10,18,CONVERSION RECOVERY RATE,1442,-389,67,19,8,3,0,0,0,0,0,0
+!*10,19,per year,2033,-50,57,14,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*12,20,48,1669,-255,10,8,0,3,0,0,-1,0,0,0
+!*1,21,23,1,4,0,0,22,0,0,0,-1--1--1,,1|(1782,-255)|
+!*1,22,23,20,100,0,0,22,0,0,0,-1--1--1,,1|(1709,-255)|
+!*11,23,48,1746,-255,6,8,34,3,0,0,1,0,0,0
+!*10,24,converted lithium,1746,-236,53,11,40,3,0,0,-1,0,0,0
+!*1,25,18,24,1,0,0,0,0,64,0,-1--1--1,,1|(1639,-320)|
+!*10,26,Brine Processing Capacity,1772,257,69,16,3,131,0,0,0,0,0,0
+!*12,27,48,2115,257,10,8,0,3,0,0,-1,0,0,0
+!*1,28,30,26,4,0,0,22,0,0,0,-1--1--1,,1|(1908,253)|
+!*1,29,30,27,100,0,0,22,0,0,0,-1--1--1,,1|(2046,253)|
+!*11,30,48,1981,253,6,8,34,3,0,0,1,0,0,0
+!*10,31,brine process capacity growth,1981,271,54,19,40,131,0,0,-1,0,0,0
+!*10,32,INIT BRINE PROCESSING CAPACITY,1571,316,82,31,8,131,0,0,0,0,0,0
+!*10,33,brine process capacity to add,1820,359,54,19,8,131,0,0,0,0,0,0
+!*10,34,targeted brine processing capacity,1771,471,62,19,8,131,0,0,0,0,0,0
+!*10,35,TIME STEP,1996,137,50,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,36,33,31,1,0,0,0,0,64,0,-1--1--1,,1|(1932,339)|
+!*1,37,26,33,1,0,0,0,0,64,0,-1--1--1,,1|(1755,307)|
+!*1,38,34,33,1,0,0,0,0,64,0,-1--1--1,,1|(1823,418)|
+!*1,39,26,34,1,0,0,0,0,64,0,-1--1--1,,1|(1711,369)|
+!*1,40,32,26,1,0,0,0,0,64,1,-1--1--1,,1|(1722,265)|
+!*10,41,demand growth rate,1833,602,55,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,42,per year,1929,520,34,15,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,43,SHIPPING TIME,2003,-337,43,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,44,43,6,1,0,0,0,0,64,0,-1--1--1,,1|(2035,-287)|
+!*10,45,tentative brine extraction quantity evap method,1229,-265,78,19,8,3,0,0,0,0,0,0
+!*1,46,16,45,1,0,0,0,0,64,0,-1--1--1,,1|(1170,-310)|
+!*1,47,18,45,0,0,0,0,0,64,0,-1--1--1,,1|(1341,-331)|
+!*10,48,INIT DIRECT EXTRACTION,1019,269,64,19,8,3,0,0,0,0,0,0
+!*10,49,REFINING CAPA BUFFER,1600,442,50,25,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,50,49,34,1,0,0,0,0,64,0,-1--1--1,,1|(1662,439)|
+!*10,51,TIME TO BUILD REFIN CAPA,2069,409,72,20,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,52,51,33,0,0,0,0,0,64,0,-1--1--1,,1|(1942,383)|
+!*10,53,potential brine supply curve,1444,310,50,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-1\
+28
+!*10,54,per year,1326,303,35,16,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,55,Li in Evap Pond,1410,-59,40,20,3,3,0,0,0,0,0,0
+!*1,56,58,55,4,0,0,22,0,0,0,-1--1--1,,1|(1325,-63)|
+!*1,57,58,15,100,0,0,22,0,0,0,-1--1--1,,1|(1231,-63)|
+!*11,58,1244,1275,-63,6,8,34,3,0,0,1,0,0,0
+!*10,59,brine extraction,1275,-44,49,11,40,3,0,0,-1,0,0,0
+!*1,60,45,59,1,0,0,0,0,64,0,-1--1--1,,1|(1209,-170)|
+!*10,61,per year,747,-141,28,13,8,131,0,0,-1,0,0,0
+!*10,62,LIVENT CAUCHARI RESERVE,206,49,74,19,8,3,0,0,-1,0,0,0
+!*10,63,Time,160,128,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,64,63,62,0,0,0,0,0,64,0,-1--1--1,,1|(177,98)|
+!*10,65,tentative brine extraction quantity evap method,1418,355,82,19,8,2,0,3,-1,0,0,0,128-128-128,0\
+-0-0,|12||128-128-128
+!*10,66,per year,1733,649,42,18,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,67,per year,1120,713,32,16,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,68,Evaporation Capacity,434,271,40,20,3,3,0,0,0,0,0,0
+!*10,69,Direct Extraction Capacity,894,270,61,21,3,131,0,0,0,0,0,0
+!*1,70,8,15,0,0,0,0,0,64,1,-1--1--1,,1|(760,-130)|
+!*12,71,48,652,272,10,8,0,3,0,0,-1,0,0,0
+!*1,72,74,71,4,0,0,22,0,0,0,-1--1--1,,1|(611,270)|
+!*1,73,74,68,100,0,0,22,0,0,0,-1--1--1,,1|(521,270)|
+!*11,74,48,573,270,6,8,34,3,0,0,1,0,0,0
+!*10,75,retired evap capacity,573,297,39,19,40,3,0,0,-1,0,0,0
+!*12,76,48,706,270,10,8,0,3,0,0,-1,0,0,0
+!*1,77,79,69,4,0,0,22,0,0,0,-1--1--1,,1|(795,270)|
+!*1,78,79,76,100,0,0,22,0,0,0,-1--1--1,,1|(731,270)|
+!*11,79,48,751,270,6,8,34,3,0,0,1,0,0,0
+!*10,80,new investment,751,289,48,11,40,3,0,0,-1,0,0,0
+!*10,81,INIT EVAP CAPACITY,432,343,42,19,8,3,0,0,0,0,0,0
+!*1,82,81,68,0,0,0,0,0,64,1,-1--1--1,,1|(433,314)|
+!*10,83,QINGHAI SALTLAKE,161,-164,98,19,8,131,0,0,0,0,0,0
+!*10,84,ALBERMALE RESERVE,124,-207,49,19,8,3,0,0,0,0,0,0
+!*1,85,84,8,0,0,0,0,0,64,0,-1--1--1,,1|(266,-197)|
+!*1,86,83,8,0,0,0,0,0,64,0,-1--1--1,,1|(309,-176)|
+!*10,87,OROCOBRE RESERVE,353,-12,46,19,8,3,0,0,0,0,0,0
+!*1,88,87,8,0,0,0,0,0,64,0,-1--1--1,,1|(382,-92)|
+!*12,89,48,1692,-63,10,8,0,3,0,0,-1,0,0,0
+!*1,90,92,89,4,0,0,22,0,0,0,-1--1--1,,1|(1618,-62)|
+!*1,91,92,55,100,0,0,22,0,0,0,-1--1--1,,1|(1496,-62)|
+!*11,92,48,1549,-62,6,8,34,3,0,0,1,0,0,0
+!*10,93,li concentrate,1549,-43,42,11,40,3,0,0,-1,0,0,0
+!*10,94,evap capacity share,603,147,44,19,8,3,0,0,0,0,0,0
+!*1,95,68,94,0,0,0,0,0,64,0,-1--1--1,,1|(514,212)|
+!*10,96,Evaporation Capacity,2018,-12,44,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,97,Li in Ion Exchange,841,-57,40,20,3,3,0,0,0,0,0,0
+!*1,98,100,97,4,0,0,22,0,0,0,-1--1--1,,1|(932,-65)|
+!*1,99,100,15,100,0,0,22,0,0,0,-1--1--1,,1|(1035,-65)|
+!*11,100,2716,989,-65,6,8,34,3,0,0,1,0,0,0
+!*10,101,direct extraction,989,-46,51,11,40,3,0,0,-1,0,0,0
+!*1,102,45,101,1,0,0,0,0,64,0,-1--1--1,,1|(1047,-171)|
+!*12,103,48,520,-65,10,8,0,3,0,0,-1,0,0,0
+!*1,104,106,103,4,0,0,22,0,0,0,-1--1--1,,1|(581,-59)|
+!*1,105,106,97,100,0,0,22,0,0,0,-1--1--1,,1|(722,-59)|
+!*11,106,48,637,-59,6,8,34,3,0,0,1,0,0,0
+!*10,107,li conc from ion exchange,637,-32,49,19,40,3,0,0,-1,0,0,0
+!*1,108,69,107,1,0,0,0,0,64,0,-1--1--1,,1|(784,120)|
+!*1,109,61,107,1,0,0,0,0,64,0,-1--1--1,,1|(672,-118)|
+!*1,110,97,107,1,0,0,0,0,64,0,-1--1--1,,1|(756,-1)|
+!*10,111,evap time,1514,-228,31,11,8,3,0,0,0,0,0,0
+!*1,112,111,93,1,0,0,0,0,64,0,-1--1--1,,1|(1556,-149)|
+!*10,113,CAPACITY TIME,538,371,42,19,8,3,0,0,0,0,0,0
+!*1,114,113,75,1,0,0,0,0,64,0,-1--1--1,,1|(535,327)|
+!*1,115,68,75,1,0,0,0,0,64,0,-1--1--1,,1|(512,302)|
+!*10,116,total conc capacity,760,193,59,11,8,3,0,0,0,0,0,0
+!*1,117,48,69,0,0,0,0,0,64,1,-1--1--1,,1|(955,269)|
+!*10,118,CONC RECOVERY RATE,1479,-324,67,19,8,3,0,0,0,0,0,0
+!*1,119,68,116,0,0,0,0,0,64,0,-1--1--1,,1|(588,234)|
+!*1,120,69,116,1,0,0,0,0,64,0,-1--1--1,,1|(808,237)|
+!*1,121,116,94,1,0,0,0,0,64,0,-1--1--1,,1|(690,123)|
+!*1,122,118,59,1,0,0,0,0,64,0,-1--1--1,,1|(1328,-224)|
+!*12,123,48,1409,-252,10,8,0,3,0,0,-1,0,0,0
+!*1,124,126,123,4,0,0,22,0,0,0,-1--1--1,,1|(1410,-196)|
+!*1,125,126,55,100,0,0,22,0,0,0,-1--1--1,,1|(1410,-107)|
+!*11,126,48,1410,-141,8,6,33,3,0,0,4,0,0,0
+!*10,127,li lost in evap process,1458,-141,40,19,40,3,0,0,-1,0,0,0
+!*1,128,118,127,1,0,0,0,0,64,0,-1--1--1,,1|(1451,-250)|
+!*1,129,118,93,1,0,0,0,0,64,0,-1--1--1,,1|(1612,-182)|
+!*1,130,111,127,1,0,0,0,0,64,0,-1--1--1,,1|(1467,-190)|
+!*12,131,48,846,-327,10,8,0,3,0,0,-1,0,0,0
+!*1,132,134,131,4,0,0,22,0,0,0,-1--1--1,,1|(852,-268)|
+!*1,133,134,97,100,0,0,22,0,0,0,-1--1--1,,1|(852,-141)|
+!*11,134,48,852,-211,8,6,33,3,0,0,4,0,0,0
+!*10,135,li lost in ion exchange,896,-211,36,19,40,3,0,0,-1,0,0,0
+!*10,136,ION EXCHANGE RECOVERY,924,-368,62,19,8,3,0,0,0,0,0,0
+!*1,137,136,107,1,0,0,0,0,64,0,-1--1--1,,1|(668,-253)|
+!*1,138,136,135,1,0,0,0,0,64,0,-1--1--1,,1|(905,-270)|
+!*1,139,97,135,1,0,0,0,0,64,0,-1--1--1,,1|(912,-122)|
+!*1,140,61,135,1,0,0,0,0,64,0,-1--1--1,,1|(788,-218)|
+!*10,141,total conc capacity,1061,-433,36,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,142,desired supply and capacity ratio,1220,-404,62,19,8,3,0,0,0,0,0,0
+!*1,143,141,142,0,0,0,0,0,64,0,-1--1--1,,1|(1120,-423)|
+!*1,144,45,142,0,0,0,0,0,64,0,-1--1--1,,1|(1224,-328)|
+!*1,145,17,8,0,0,0,0,0,64,0,-1--1--1,,1|(281,-257)|
+!*1,146,62,8,0,0,0,0,0,64,0,-1--1--1,,1|(306,-63)|
+!*10,147,desired supply and capacity ratio,489,574,51,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-\
+128-128
+!*10,148,TIME STEP,483,624,50,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,149,CAPACITY MODULE SIZE,691,563,54,19,8,3,0,0,0,0,0,0
+!*10,150,targeted brine conc capacity,989,544,61,19,8,3,0,0,0,0,0,0
+!*10,151,REFINING CAPA BUFFER,1183,631,49,30,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,152,MINING CAPA BUFFER FACTOR,1091,380,65,31,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-1\
+28
+!*10,153,demand growth rate,458,517,55,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,154,TIME TO BUILD MINING CAPA,623,449,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,155,brine conc capacity to add,831,401,49,19,8,3,0,0,0,0,0,0
+!*1,156,150,155,0,0,0,0,0,64,0,-1--1--1,,1|(916,477)|
+!*1,157,154,155,1,0,0,0,0,64,0,-1--1--1,,1|(715,373)|
+!*1,158,155,80,1,0,0,0,0,64,0,-1--1--1,,1|(807,329)|
+!*1,159,93,24,1,0,0,0,0,64,0,-1--1--1,,1|(1691,-151)|
+!*1,160,58,93,1,0,0,0,0,64,0,-1--1--1,,1|(1418,9)|
+!*1,161,59,127,1,0,0,0,0,64,0,-1--1--1,,1|(1340,-112)|
+!*10,162,desired production,1814,542,40,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,163,evap capacity share,1139,56,49,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,164,163,101,1,0,0,0,0,64,0,-1--1--1,,1|(1024,20)|
+!*1,165,163,59,1,0,0,0,0,64,0,-1--1--1,,1|(1240,26)|
+!*10,166,li conc from ion exchange,1658,-386,54,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-12\
+8
+!*1,167,166,24,1,0,0,0,0,64,0,-1--1--1,,1|(1722,-341)|
+!*10,168,desired production,1155,507,40,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,169,69,150,1,0,0,0,0,64,0,-1--1--1,,1|(992,403)|
+!*1,170,152,150,1,0,0,0,0,64,0,-1--1--1,,1|(1070,483)|
+!*1,171,69,155,1,0,0,0,0,64,0,-1--1--1,,1|(899,347)|
+!*10,172,Brine Processing Capacity,1844,-368,58,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-12\
+8
+!*1,173,172,24,1,0,0,0,0,64,0,-1--1--1,,1|(1782,-315)|
+!*10,174,per year,1421,53,36,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,175,Price,698,-426,27,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,176,total supply,1844,-111,46,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,177,Observe Continuous Demand Growth,1617,593,70,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-\
+128-128
+!*1,178,177,34,1,0,0,0,0,64,0,-1--1--1,,1|(1640,531)|
+!*1,179,51,34,0,0,0,0,0,64,0,-1--1--1,,1|(1921,439)|
+!*1,180,42,34,0,0,0,0,0,64,0,-1--1--1,,1|(1870,502)|
+!*1,181,118,45,0,0,0,0,0,64,0,-1--1--1,,1|(1366,-299)|
+!*10,182,Observe Continuous Demand Growth,933,707,70,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-1\
+28-128
+!*1,183,182,150,1,0,0,0,0,64,0,-1--1--1,,1|(937,605)|
+!*1,184,154,150,1,0,0,0,0,64,0,-1--1--1,,1|(801,494)|
+!*1,185,67,150,1,0,0,0,0,64,0,-1--1--1,,1|(1001,589)|
+:SCREEN ERROR846
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!\\\---/// Sketch information - do not modify anything except names
+:SCREEN ERROR847
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!V300  Do not put anything below this section - it will be ignored
+:SCREEN ERROR848
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!*Demand
+!*$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,100,0
+!*10,1,demand growth rate,838,301,50,19,8,3,0,0,0,0,0,0
+!*10,2,INIT DEMAND,136,166,54,11,8,3,0,0,0,0,0,0
+!*10,3,Backlog,625,413,40,20,3,3,0,0,0,0,0,0
+!*12,4,48,883,414,10,8,0,3,0,0,-1,0,0,0
+!*1,5,7,3,4,0,0,22,0,0,0,-1--1--1,,1|(716,408)|
+!*1,6,7,4,100,0,0,22,0,0,0,-1--1--1,,1|(826,408)|
+!*11,7,48,773,408,6,8,34,3,0,0,1,0,0,0
+!*10,8,new orders,773,427,36,11,40,3,0,0,-1,0,0,0
+!*12,9,48,399,410,10,8,0,3,0,0,-1,0,0,0
+!*1,10,12,9,4,0,0,22,0,0,0,-1--1--1,,1|(461,407)|
+!*1,11,12,3,100,0,0,22,0,0,0,-1--1--1,,1|(555,407)|
+!*11,12,48,520,407,6,8,34,3,0,0,1,0,0,0
+!*10,13,processed orders,520,426,55,11,40,3,0,0,-1,0,0,0
+!*10,14,STANDARD BACKLOG TIME,627,751,62,19,8,3,0,0,0,0,0,0
+!*10,15,posted demand,724,218,58,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,16,Non EV Demand,551,-73,40,20,3,3,0,0,0,0,0,0
+!*12,17,48,311,-75,10,8,0,3,0,0,-1,0,0,0
+!*1,18,20,16,4,0,0,22,0,0,0,-1--1--1,,1|(472,-75)|
+!*1,19,20,17,100,0,0,22,0,0,0,-1--1--1,,1|(371,-75)|
+!*11,20,48,428,-75,6,8,34,3,0,0,1,0,0,0
+!*10,21,Non EV Demand growth,428,-48,56,19,40,3,0,0,-1,0,0,0
+!*10,22,NON EV DEMAND GROWTH RATE,421,98,70,19,8,3,0,0,0,0,0,0
+!*1,23,22,21,1,0,0,0,0,64,0,-1--1--1,,1|(380,23)|
+!*1,24,16,21,1,0,0,0,0,64,0,-1--1--1,,1|(485,-3)|
+!*10,25,INIT NON EV DEMAND,521,-178,50,19,8,3,0,0,0,0,0,0
+!*1,26,25,16,1,0,0,0,0,64,1,-1--1--1,,1|(573,-140)|
+!*10,27,total theoretical Li demand,714,-163,57,19,8,3,0,0,0,0,0,0
+!*1,28,16,27,1,0,0,0,0,64,0,-1--1--1,,1|(595,-196)|
+!*10,29,Li demand from EV,708,-38,51,19,8,3,0,0,0,0,0,0
+!*1,30,29,27,1,0,0,0,0,64,0,-1--1--1,,1|(701,-98)|
+!*10,31,SCENARIO CHOICE,802,-103,42,19,8,3,0,0,0,0,0,0
+!*10,32,effective scenario,784,74,54,11,8,3,0,0,0,0,0,0
+!*1,33,31,32,1,0,0,0,0,64,0,-1--1--1,,1|(823,-32)|
+!*1,34,32,29,1,0,0,0,0,64,0,-1--1--1,,1|(719,5)|
+!*10,35,total theoretical Li demand,259,339,62,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,36,NPS SCENARIO,937,-4,89,14,8,131,0,0,0,0,0,0
+!*10,37,EV30 SCENARIO,630,67,49,19,8,131,0,0,0,0,0,0
+!*1,38,37,32,1,0,0,0,0,64,0,-1--1--1,,1|(699,104)|
+!*1,39,36,32,0,0,0,0,0,64,0,-1--1--1,,1|(863,33)|
+!*10,40,per year,156,-160,31,15,8,131,0,0,0,0,0,0
+!*10,41,Time,874,172,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,42,per year,182,50,36,12,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,43,40,3,0,0,0,0,0,64,1,-1--1--1,,1|(383,118)|
+!*1,44,2,3,0,0,0,0,0,64,1,-1--1--1,,1|(364,281)|
+!*10,45,total supply,580,182,46,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,46,DEMAND ADJUSTMENT TIME,1456,27,75,19,8,3,0,0,0,0,0,0
+!*1,47,42,21,1,0,0,0,0,64,0,-1--1--1,,1|(273,-15)|
+!*1,48,41,32,0,0,0,0,0,64,0,-1--1--1,,1|(833,128)|
+!*10,49,ADJUSTMENT TABLE,1468,-11,54,19,8,3,0,0,0,0,0,0
+!*10,50,one year,939,89,28,11,8,3,0,0,0,0,0,0
+!*1,51,50,32,1,0,0,0,0,64,0,-1--1--1,,1|(846,71)|
+!*10,52,Average Orders,809,780,40,20,3,3,0,0,0,0,0,0
+!*1,53,8,52,1,0,0,0,0,64,0,-1--1--1,,1|(868,595)|
+!*10,54,desired backlog,738,681,50,11,8,3,0,0,0,0,0,0
+!*10,55,desired production,425,651,59,13,8,131,0,0,0,0,0,0
+!*10,56,backlog correction,647,608,59,11,8,3,0,0,0,0,0,0
+!*1,57,14,54,1,0,0,0,0,64,0,-1--1--1,,1|(716,725)|
+!*10,58,TIME TO CORRECT BACKLOG,761,580,73,19,8,3,0,0,0,0,0,0
+!*10,59,TIME TO AVERAGE ORDERS,961,781,72,19,8,3,0,0,0,0,0,0
+!*1,60,59,52,1,0,0,0,0,64,0,-1--1--1,,1|(891,755)|
+!*10,61,actual backlog time,517,546,46,19,8,3,0,0,0,0,0,0
+!*1,62,3,61,1,0,0,0,0,64,0,-1--1--1,,1|(544,530)|
+!*1,63,13,61,1,0,0,0,0,64,0,-1--1--1,,1|(527,534)|
+!*10,64,potential production,318,689,40,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,65,52,54,1,0,0,0,0,64,0,-1--1--1,,1|(793,723)|
+!*1,66,54,56,1,0,0,0,0,64,0,-1--1--1,,1|(652,661)|
+!*1,67,56,55,1,0,0,0,0,64,0,-1--1--1,,1|(547,645)|
+!*1,68,52,55,1,0,0,0,0,64,0,-1--1--1,,1|(546,802)|
+!*1,69,58,56,1,0,0,0,0,64,0,-1--1--1,,1|(733,619)|
+!*1,70,3,56,1,0,0,0,0,64,0,-1--1--1,,1|(682,519)|
+!*1,71,55,13,1,0,0,0,0,64,0,-1--1--1,,1|(383,513)|
+!*10,72,adjusted supply,268,441,58,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,73,backlog pressure,945,527,54,11,8,3,0,0,0,0,0,0
+!*1,74,13,73,1,0,0,0,0,64,0,-1--1--1,,1|(731,494)|
+!*1,75,8,73,1,0,0,0,0,64,0,-1--1--1,,1|(895,455)|
+!*10,76,Time,142,294,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,77,Time,164,222,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,78,Time,136,362,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,79,adjusted demand,962,330,32,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,80,Price,1127,465,27,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,81,Time,272,206,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,82,72,13,1,0,0,0,0,64,0,-1--1--1,,1|(376,442)|
+!*1,83,15,8,1,0,0,0,0,64,0,-1--1--1,,1|(714,311)|
+!*1,84,79,1,1,0,0,0,0,64,0,-1--1--1,,1|(915,273)|
+!*1,85,15,1,1,0,0,0,0,64,0,-1--1--1,,1|(770,257)|
+!*10,86,supply demand ratio,582,268,48,19,8,3,0,0,0,0,0,0
+!*1,87,15,86,1,0,0,0,0,64,0,-1--1--1,,1|(650,223)|
+!*1,88,45,86,0,0,0,0,0,64,0,-1--1--1,,1|(580,214)|
+!*10,89,adjusted demand based on supply,457,327,55,19,8,3,0,0,0,0,0,0
+!*1,90,86,89,1,0,0,0,0,64,0,-1--1--1,,1|(485,266)|
+!*1,91,35,89,0,0,0,0,0,64,0,-1--1--1,,1|(354,333)|
+!*10,92,order proc time comparison,618,911,50,19,8,3,0,0,0,0,0,0
+!*1,93,59,92,1,0,0,0,0,64,0,-1--1--1,,1|(820,873)|
+!*10,94,actual backlog time,470,839,51,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,95,94,92,1,0,0,0,0,64,0,-1--1--1,,1|(501,904)|
+:SCREEN ERROR849
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!\\\---/// Sketch information - do not modify anything except names
+:SCREEN ERROR850
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!V300  Do not put anything below this section - it will be ignored
+:SCREEN ERROR851
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!*Mining from Ore
+!*$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,80,0
+!*10,1,Concentrate Inventory,466,695,47,22,3,131,0,0,0,0,0,0
+!*10,2,Concentrate Capacity,170,210,48,22,3,131,0,0,0,0,0,0
+!*12,3,48,527,209,10,8,0,3,0,0,-1,0,0,0
+!*1,4,6,2,4,0,0,22,0,0,0,-1--1--1,,1|(279,213)|
+!*1,5,6,3,100,0,0,22,0,0,0,-1--1--1,,1|(434,213)|
+!*11,6,48,346,213,6,8,34,3,0,0,1,0,0,0
+!*10,7,Concentrate capacity growth,346,240,44,19,40,131,0,0,-1,0,0,0
+!*10,8,INIT MINING CAPACITY,-1,296,76,24,8,131,0,0,0,0,0,0
+!*10,9,TIME TO BUILD MINING CAPA,480,60,64,24,8,131,0,0,0,0,0,0
+!*10,10,mine capacity to add 0,240,116,52,19,8,131,0,0,0,0,0,0
+!*10,11,targeted mining capacity 0,179,14,48,19,8,131,0,0,0,0,0,0
+!*1,12,9,10,1,0,0,0,0,64,0,-1--1--1,,1|(434,157)|
+!*10,13,MINING CAPA BUFFER FACTOR,-22,-6,67,25,8,131,0,0,0,0,0,0
+!*10,14,TIME STEP,851,986,50,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,15,10,7,1,0,0,0,0,64,0,-1--1--1,,1|(263,167)|
+!*1,16,2,10,1,0,0,0,0,64,0,-1--1--1,,1|(195,167)|
+!*1,17,11,10,1,0,0,0,0,64,0,-1--1--1,,1|(191,72)|
+!*1,18,8,2,1,0,0,0,0,64,1,-1--1--1,,1|(79,255)|
+!*10,19,Concentrate at Conversion,718,697,58,20,3,131,0,0,0,0,0,0
+!*12,20,48,937,686,10,8,0,3,0,0,-1,0,0,0
+!*1,21,23,20,4,0,0,22,0,0,0,-1--1--1,,1|(888,689)|
+!*1,22,23,19,100,0,0,22,0,0,0,-1--1--1,,1|(806,689)|
+!*11,23,48,843,689,6,8,34,3,0,0,1,0,0,0
+!*10,24,Li to be refined,843,716,40,19,40,3,0,0,-1,0,0,0
+!*10,25,Concentrate Capacity,341,857,78,19,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,26,demand growth rate,73,-200,55,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,27,19,24,1,0,0,0,0,64,0,-1--1--1,,1|(776,762)|
+!*10,28,Time,366,746,26,11,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,29,PHYSICAL RECOVERY RATE,369,591,67,19,8,3,0,0,0,0,0,0
+!*10,30,CHEMICAL RECOVERY RATE,428,327,67,19,8,3,0,0,0,0,0,0
+!*10,31,potential ore supply curve,648,585,45,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,32,per year,1956,107,36,23,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,33,Time,355,-159,26,11,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,34,GALAXY MTCATTLIN RESERVE,-154,540,127,12,8,131,0,0,0,0,0,0
+!*10,35,JIANGXI RESERVE,-202,739,68,17,8,131,0,0,0,0,0,0
+!*10,36,KELIBER RESERVE,-217,1060,36,19,8,3,0,0,0,0,0,0
+!*10,37,NEMASKA LITHIUM WABOUCHI RESERVE,-123,690,154,10,8,131,0,0,0,0,0,0
+!*10,38,PILBARA MINERALS RESERVES,-140,792,147,14,8,131,0,0,0,0,0,0
+!*10,39,TALISON GREENBUSHES RESERVE,-138,491,135,11,8,131,0,0,0,0,0,0
+!*10,40,MINERAL RESOURCES WODGINA RESERVE,-132,596,189,14,8,131,0,0,0,0,0,0
+!*10,41,ALLIANCE MINERAL BALD HILL RESERVE,-119,896,162,7,8,131,0,0,0,0,0,0
+!*10,42,ALTURA MINING RESERVE,-131,955,141,9,8,131,0,0,0,0,0,0
+!*10,43,CATL LA CORNE RESERVE,-170,637,136,10,8,131,0,0,0,0,0,0
+!*10,44,BIKITA MINERALS RESERVE,-167,849,153,18,8,131,0,0,0,0,0,0
+!*10,45,total reserve,165,526,39,11,8,3,0,0,0,0,0,0
+!*1,46,39,45,0,0,0,0,0,64,0,-1--1--1,,1|(34,510)|
+!*1,47,34,45,0,0,0,0,0,64,0,-1--1--1,,1|(42,531)|
+!*1,48,40,45,0,0,0,0,0,64,0,-1--1--1,,1|(19,560)|
+!*1,49,43,45,0,0,0,0,0,64,0,-1--1--1,,1|(-11,584)|
+!*1,50,37,45,0,0,0,0,0,64,0,-1--1--1,,1|(13,611)|
+!*1,51,35,45,0,0,0,0,0,64,0,-1--1--1,,1|(-19,633)|
+!*1,52,38,45,0,0,0,0,0,64,0,-1--1--1,,1|(8,662)|
+!*1,53,44,45,0,0,0,0,0,64,0,-1--1--1,,1|(-3,688)|
+!*1,54,41,45,0,0,0,0,0,64,0,-1--1--1,,1|(16,718)|
+!*1,55,42,45,0,0,0,0,0,64,0,-1--1--1,,1|(12,747)|
+!*10,56,Remaining Reserve,216,448,40,20,3,3,0,0,0,0,0,0
+!*1,57,45,56,0,0,0,0,0,64,1,-1--1--1,,1|(183,497)|
+!*12,58,48,366,451,10,8,0,3,0,0,-1,0,0,0
+!*1,59,61,58,4,0,0,22,0,0,0,-1--1--1,,1|(334,451)|
+!*1,60,61,56,100,0,0,22,0,0,0,-1--1--1,,1|(278,451)|
+!*11,61,48,306,451,6,8,34,3,0,0,1,0,0,0
+!*10,62,rock mining,306,470,37,11,40,3,0,0,-1,0,0,0
+!*12,63,48,265,686,10,8,0,3,0,0,-1,0,0,0
+!*1,64,66,1,4,0,0,22,0,0,0,-1--1--1,,1|(386,686)|
+!*1,65,66,63,100,0,0,22,0,0,0,-1--1--1,,1|(308,686)|
+!*11,66,48,347,686,6,8,34,3,0,0,1,0,0,0
+!*10,67,processed ore,347,705,45,11,40,3,0,0,-1,0,0,0
+!*1,68,62,67,1,0,0,0,0,64,0,-1--1--1,,1|(270,585)|
+!*1,69,29,66,0,0,0,0,0,64,0,-1--1--1,,1|(358,638)|
+!*10,70,per year,659,7,38,25,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,71,2,62,1,0,0,0,0,64,0,-1--1--1,,1|(256,348)|
+!*10,72,ORE PROCESSING TIME,706,831,57,25,8,131,0,0,0,0,0,0
+!*1,73,75,19,4,0,0,22,0,0,0,-1--1--1,,1|(625,706)|
+!*1,74,75,1,100,0,0,22,0,0,0,-1--1--1,,1|(546,706)|
+!*11,75,3132,585,706,6,8,34,3,0,0,1,0,0,0
+!*10,76,to refinery,585,725,33,11,40,3,0,0,-1,0,0,0
+!*1,77,72,76,1,0,0,0,0,64,0,-1--1--1,,1|(598,780)|
+!*1,78,1,76,1,0,0,0,0,64,0,-1--1--1,,1|(508,748)|
+!*10,79,Processing Capacity,1373,672,40,20,3,3,0,0,0,0,0,0
+!*12,80,48,1596,676,10,8,0,3,0,0,-1,0,0,0
+!*1,81,83,79,4,0,0,22,0,0,0,-1--1--1,,1|(1452,676)|
+!*1,82,83,80,100,0,0,22,0,0,0,-1--1--1,,1|(1545,676)|
+!*11,83,48,1498,676,6,8,34,3,0,0,1,0,0,0
+!*10,84,Processing capacity growth,1498,694,54,19,40,131,0,0,-1,0,0,0
+!*10,85,INIT PROCESSING CAPACITY,1039,879,85,30,8,131,0,0,0,0,0,0
+!*10,86,TIME TO BUILD REFIN CAPA,1548,855,59,19,8,3,0,0,0,0,0,0
+!*10,87,process capacity to add,1413,805,62,19,8,131,0,0,0,0,0,0
+!*10,88,targeted process capacity,1322,905,53,19,8,131,0,0,0,0,0,0
+!*1,89,86,87,1,0,0,0,0,64,0,-1--1--1,,1|(1522,799)|
+!*10,90,Observe Continuous Demand Growth,1391,477,64,24,3,131,0,0,0,0,0,0
+!*12,91,48,1219,473,10,8,0,3,0,0,-1,0,0,0
+!*1,92,94,90,4,0,0,22,0,0,0,-1--1--1,,1|(1305,473)|
+!*1,93,94,91,100,0,0,22,0,0,0,-1--1--1,,1|(1250,473)|
+!*11,94,48,1278,473,6,8,34,3,0,0,1,0,0,0
+!*10,95,counting 2,1278,492,45,11,40,3,0,0,-1,0,0,0
+!*12,96,48,1572,472,10,8,0,3,0,0,-1,0,0,0
+!*1,97,99,96,4,0,0,22,0,0,0,-1--1--1,,1|(1526,472)|
+!*1,98,99,90,100,0,0,22,0,0,0,-1--1--1,,1|(1466,472)|
+!*11,99,48,1484,472,6,8,34,3,0,0,1,0,0,0
+!*10,100,resetting 2,1484,491,45,11,40,3,0,0,-1,0,0,0
+!*1,101,90,100,1,0,0,0,0,64,0,-1--1--1,,1|(1455,524)|
+!*1,102,95,100,1,0,0,0,0,64,0,-1--1--1,,1|(1425,557)|
+!*10,103,TIME STEP,1486,310,50,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,104,103,100,1,0,0,0,0,64,0,-1--1--1,,1|(1487,466)|
+!*1,105,87,84,1,0,0,0,0,64,0,-1--1--1,,1|(1444,746)|
+!*1,106,79,87,1,0,0,0,0,64,0,-1--1--1,,1|(1374,746)|
+!*1,107,88,87,1,0,0,0,0,64,0,-1--1--1,,1|(1398,871)|
+!*1,108,79,88,1,0,0,0,0,64,0,-1--1--1,,1|(1284,816)|
+!*10,109,Observe Continuous Demand Growth,1320,1083,105,18,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||\
+128-128-128
+!*1,110,109,88,1,0,0,0,0,64,0,-1--1--1,,1|(1277,989)|
+!*1,111,85,79,1,0,0,0,0,64,1,-1--1--1,,1|(1281,702)|
+!*10,112,converted quantity comparison,1153,601,105,14,8,131,0,0,0,0,0,0
+!*1,113,79,112,1,0,0,0,0,64,0,-1--1--1,,1|(1252,640)|
+!*10,114,demand growth rate,1476,1043,55,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,115,REFINING CAPA BUFFER,1186,832,57,21,8,131,0,0,-1,0,0,0
+!*1,116,115,88,1,0,0,0,0,64,0,-1--1--1,,1|(1224,889)|
+!*1,117,72,24,1,0,0,0,0,64,0,-1--1--1,,1|(813,787)|
+!*1,118,79,24,1,0,0,0,0,64,0,-1--1--1,,1|(1105,709)|
+!*10,119,tentative mining quantity,504,520,49,19,8,3,0,0,0,0,0,0
+!*1,120,30,119,1,0,0,0,0,64,0,-1--1--1,,1|(541,418)|
+!*1,121,31,119,1,0,0,0,0,64,0,-1--1--1,,1|(612,528)|
+!*1,122,29,119,1,0,0,0,0,64,0,-1--1--1,,1|(476,581)|
+!*1,123,119,62,1,0,0,0,0,64,0,-1--1--1,,1|(399,468)|
+!*10,124,tentative mining quantity,170,793,54,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,125,19,112,1,0,0,0,0,64,0,-1--1--1,,1|(912,638)|
+!*1,126,72,112,1,0,0,0,0,64,0,-1--1--1,,1|(952,768)|
+!*10,127,per year,1787,897,38,20,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,128,CHEMICAL RECOVERY RATE,912,556,71,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,129,128,24,1,0,0,0,0,64,0,-1--1--1,,1|(838,630)|
+!*10,130,Refined Li Inventory,920,401,40,20,3,3,0,0,0,0,0,0
+!*12,131,48,743,393,10,8,0,3,0,0,-1,0,0,0
+!*1,132,134,130,4,0,0,22,0,0,0,-1--1--1,,1|(851,393)|
+!*1,133,134,131,100,0,0,22,0,0,0,-1--1--1,,1|(781,393)|
+!*11,134,48,816,393,6,8,34,3,0,0,1,0,0,0
+!*10,135,refining,816,412,24,11,40,3,0,0,-1,0,0,0
+!*12,136,48,1084,399,10,8,0,3,0,0,-1,0,0,0
+!*1,137,139,136,4,0,0,22,0,0,0,-1--1--1,,1|(1048,399)|
+!*1,138,139,130,100,0,0,22,0,0,0,-1--1--1,,1|(985,399)|
+!*11,139,48,1017,399,6,8,34,3,0,0,1,0,0,0
+!*10,140,li from ore,1017,423,58,16,40,131,0,0,-1,0,0,0
+!*1,141,24,135,1,0,0,0,0,64,0,-1--1--1,,1|(780,576)|
+!*10,142,SHIPPING TIME,998,296,58,11,8,3,0,0,0,0,0,0
+!*1,143,142,140,1,0,0,0,0,64,0,-1--1--1,,1|(984,355)|
+!*1,144,130,140,1,0,0,0,0,64,0,-1--1--1,,1|(967,456)|
+!*1,145,30,135,1,0,0,0,0,64,0,-1--1--1,,1|(670,326)|
+!*10,146,desired production,-83,-79,40,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,147,13,11,1,0,0,0,0,64,0,-1--1--1,,1|(87,-23)|
+!*1,148,2,11,1,0,0,0,0,64,0,-1--1--1,,1|(123,102)|
+!*10,149,desired production,1097,986,40,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,150,potential production,1228,84,80,23,8,131,0,0,0,0,0,0
+!*10,151,Processing Capacity,1064,125,40,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,152,151,150,1,0,0,0,0,64,0,-1--1--1,,1|(1110,69)|
+!*10,153,Brine Processing Capacity,1289,162,58,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,154,153,150,1,0,0,0,0,64,0,-1--1--1,,1|(1285,91)|
+!*10,155,Installed Geo Li Conversion Capa,1288,-76,61,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-\
+128-128
+!*1,156,155,150,1,0,0,0,0,64,0,-1--1--1,,1|(1173,-5)|
+!*10,157,per year,872,488,36,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,158,per year,418,808,36,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,159,Price,773,128,27,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,160,158,130,0,0,0,0,0,64,1,-1--1--1,,1|(657,613)|
+!*10,161,supply demand ratio,1254,368,53,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,162,161,95,1,0,0,0,0,64,0,-1--1--1,,1|(1256,384)|
+!*10,163,Observe Continuous Demand Growth,263,-104,70,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-\
+128-128
+!*1,164,163,11,1,0,0,0,0,64,0,-1--1--1,,1|(151,-41)|
+!*10,165,per year,-178,-210,36,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,166,165,11,0,0,0,0,0,64,0,-1--1--1,,1|(-12,-105)|
+!*1,167,9,11,0,0,0,0,0,64,0,-1--1--1,,1|(327,38)|
+!*10,168,supply demand ratio,1145,517,53,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+:SCREEN ERROR852
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!\\\---/// Sketch information - do not modify anything except names
+:SCREEN ERROR853
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!V300  Do not put anything below this section - it will be ignored
+:SCREEN ERROR854
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!*Charts
+!*$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,90,0
+!*12,1,4917216,268,710,227,170,3,188,0,0,2,0,0,0
+!*Price,Graph
+!*12,2,4984032,753,692,243,200,3,188,0,0,1,0,0,0
+:SCREEN ERROR855
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!supply-demand
+!*10,3,UNIT OPEX,786,975,52,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*12,4,11078994,1237,290,232,172,3,188,0,0,2,0,0,0
+!*potential production,Graph
+!*12,5,1510836,153,1513,80,20,3,124,0,0,0,0,0,0
+!*SCENARIO CHOICE,1,2,1
+!*12,6,0,159,1472,53,19,8,7,0,0,-1,0,0,0
+!*1 for NPS
+!*12,7,9048186,342,1511,80,20,3,124,0,0,0,0,0,0
+!*"GEOTHERMAL ON?
+!*12,8,0,344,1462,83,28,8,7,0,0,-1,0,0,0
+!*Considering Li from Geothermal (1 for YES
+!*12,9,8916072,756,255,229,209,3,188,0,0,2,0,0,0
+!*total supply,Graph
+!*12,10,9046982,277,250,227,208,3,188,0,0,2,0,0,0
+!*li from geo,Graph
+!*12,11,2427452,1248,680,234,211,3,188,0,0,2,0,0,0
+!*brine li to be sold,Graph
+!*12,12,3673034,1735,289,238,171,3,188,0,0,2,0,0,0
+!*li from ore,Graph
+!*10,13,TIME TO ADJUST PRICE,911,948,60,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*12,14,4328788,1735,679,239,208,3,188,0,0,2,0,0,0
+!*supply demand ratio,Graph
+!*12,15,0,235,1610,79,28,8,7,0,3,-1,0,0,0,255-0-0,0-0-0,|12||255-0-0
+:SCREEN ERROR856
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Capacity for Geothermal production has been significantly raised
+!*10,16,TIME TO CORRECT BACKLOG,920,1128,45,28,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,17,TIME TO AVERAGE ORDERS,921,1078,78,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,18,DMD ELASTICITY,915,993,52,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*12,19,7932876,263,1118,211,197,3,188,0,0,1,0,0,0
+:SCREEN ERROR857
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!Annual_Profit
+!*10,20,STANDARD BACKLOG TIME,922,1034,67,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,21,SHIPPING TIME,924,1183,43,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,22,TIME TO BUILD MINING CAPA,1315,1018,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,23,TIME TO BUILD REFIN CAPA,1445,936,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+:SCREEN ERROR858
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!\\\---/// Sketch information - do not modify anything except names
+:SCREEN ERROR859
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!V300  Do not put anything below this section - it will be ignored
+:SCREEN ERROR860
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!*Geothermal
+!*$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,80,0
+!*10,1,IMPERIAL LI RESERVE,-32,942,48,19,8,3,0,0,0,0,0,0
+!*10,2,IMPERIAL GEOTHERMAL CAPACITY,-69,497,74,28,8,3,0,0,0,0,0,0
+!*10,3,AVE Q PER MW PER YR,-63,600,59,19,8,3,0,0,0,0,0,0
+!*10,4,ave q of imperial per yr,101,546,46,19,8,3,0,0,0,0,0,0
+!*1,5,2,4,1,0,0,0,0,64,0,-1--1--1,,1|(76,481)|
+!*1,6,3,4,1,0,0,0,0,64,0,-1--1--1,,1|(33,597)|
+!*10,7,LI CONCENTRATING CAPACITY MODULE,263,753,80,19,8,3,0,0,0,0,0,0
+!*10,8,CAPEX,249,366,53,19,8,3,0,0,0,0,0,0
+!*10,9,UNIT OPEX,1134,1128,62,19,8,3,0,0,0,0,0,0
+!*10,10,Remaining Imperial Li Reserve,231,965,64,24,3,131,0,0,0,0,0,0
+!*10,11,AVE IMPERIAL LI CONCENTRATION,5,727,71,19,8,3,0,0,0,0,0,0
+!*10,12,actual capex,400,469,40,11,8,3,0,0,0,0,0,0
+!*10,13,Year of New Investment,625,462,70,30,3,131,0,0,0,0,0,0
+!*12,14,48,466,462,10,8,0,3,0,0,-1,0,0,0
+!*1,15,17,13,4,0,0,22,0,0,0,-1--1--1,,1|(538,462)|
+!*1,16,17,14,100,0,0,22,0,0,0,-1--1--1,,1|(492,462)|
+!*11,17,48,515,462,6,8,34,3,0,0,1,0,0,0
+!*10,18,tracking,515,481,26,11,40,3,0,0,-1,0,0,0
+!*12,19,48,860,466,10,8,0,3,0,0,-1,0,0,0
+!*1,20,22,19,4,0,0,22,0,0,0,-1--1--1,,1|(814,466)|
+!*1,21,22,13,100,0,0,22,0,0,0,-1--1--1,,1|(730,466)|
+!*11,22,48,772,466,6,8,34,3,0,0,1,0,0,0
+!*10,23,resetting year,772,485,42,11,40,3,0,0,-1,0,0,0
+!*1,24,13,12,1,0,0,0,0,64,0,-1--1--1,,1|(514,295)|
+!*1,25,8,12,1,0,0,0,0,64,0,-1--1--1,,1|(316,404)|
+!*10,26,Time,335,546,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,27,26,12,1,0,0,0,0,64,0,-1--1--1,,1|(397,519)|
+!*10,28,Installed Geo Li Concentrating Capa,601,618,69,20,3,131,0,0,0,0,0,0
+!*12,29,48,410,616,10,8,0,3,0,0,-1,0,0,0
+!*1,30,32,28,4,0,0,22,0,0,0,-1--1--1,,1|(507,616)|
+!*1,31,32,29,100,0,0,22,0,0,0,-1--1--1,,1|(445,616)|
+!*11,32,48,476,616,6,8,34,3,0,0,1,0,0,0
+!*10,33,adding capacity,476,635,49,11,40,3,0,0,-1,0,0,0
+!*1,34,13,33,1,0,0,0,0,64,0,-1--1--1,,1|(561,563)|
+!*1,35,26,33,1,0,0,0,0,64,0,-1--1--1,,1|(351,602)|
+!*10,36,years of operation,466,807,57,11,8,3,0,0,0,0,0,0
+!*10,37,Time,362,901,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,38,37,36,0,0,0,0,0,64,0,-1--1--1,,1|(408,858)|
+!*10,39,FAST RAMP UP CURVE,720,751,58,19,8,3,0,0,0,0,0,0
+!*10,40,production capa,612,849,51,11,8,3,0,0,0,0,0,0
+!*1,41,39,40,1,0,0,0,0,64,0,-1--1--1,,1|(695,821)|
+!*1,42,36,40,1,0,0,0,0,64,0,-1--1--1,,1|(521,836)|
+!*1,43,28,40,1,0,0,0,0,64,0,-1--1--1,,1|(643,739)|
+!*10,44,ave li amount extracted per yr,167,636,51,19,8,3,0,0,0,0,0,0
+!*1,45,4,44,0,0,0,0,0,64,0,-1--1--1,,1|(130,585)|
+!*1,46,11,44,0,0,0,0,0,64,0,-1--1--1,,1|(80,684)|
+!*10,47,Installed Geo Li Conversion Capa,973,613,59,20,3,131,0,0,0,0,0,0
+!*12,48,48,807,609,10,8,0,3,0,0,-1,0,0,0
+!*1,49,51,47,4,0,0,22,0,0,0,-1--1--1,,1|(892,609)|
+!*1,50,51,48,100,0,0,22,0,0,0,-1--1--1,,1|(838,609)|
+!*11,51,48,865,609,6,8,34,3,0,0,1,0,0,0
+!*10,52,adding geo conversion capa,865,636,52,19,40,3,0,0,-1,0,0,0
+!*10,53,TIME TO BUILD MINING CAPA,1296,497,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,54,13,52,1,0,0,0,0,64,0,-1--1--1,,1|(713,582)|
+!*10,55,LI CONVERSION CAPA MODULE,1057,730,64,19,8,3,0,0,0,0,0,0
+!*10,56,TIME STEP,466,551,50,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,57,56,33,1,0,0,0,0,64,0,-1--1--1,,1|(448,584)|
+!*1,58,55,158,1,0,0,0,0,64,0,-1--1--1,,1|(944,712)|
+!*10,59,Li in Geo Ion Exchange,517,969,67,21,3,131,0,0,0,0,0,0
+!*10,60,Geo Li Inventory,1085,974,40,20,3,3,0,0,0,0,0,0
+!*1,61,63,59,4,0,0,22,0,0,0,-1--1--1,,1|(414,968)|
+!*1,62,63,10,100,0,0,22,0,0,0,-1--1--1,,1|(331,968)|
+!*11,63,2268,372,968,6,8,34,3,0,0,1,0,0,0
+!*10,64,geo extraction,372,987,45,11,40,3,0,0,-1,0,0,0
+!*1,65,44,64,1,0,0,0,0,64,0,-1--1--1,,1|(192,822)|
+!*1,66,40,64,1,0,0,0,0,64,0,-1--1--1,,1|(480,895)|
+!*1,67,1,10,0,0,0,0,0,64,1,-1--1--1,,1|(85,951)|
+!*12,68,48,788,970,10,8,0,3,0,0,-1,0,0,0
+!*1,69,71,68,4,0,0,22,0,0,0,-1--1--1,,1|(746,969)|
+!*1,70,71,59,100,0,0,22,0,0,0,-1--1--1,,1|(643,969)|
+!*11,71,48,708,969,6,8,34,3,0,0,1,0,0,0
+!*10,72,to geo conversion,708,988,56,11,40,3,0,0,-1,0,0,0
+!*12,73,48,507,1142,10,8,0,3,0,0,-1,0,0,0
+!*1,74,76,73,4,0,0,22,0,0,0,-1--1--1,,1|(506,1098)|
+!*1,75,76,59,100,0,0,22,0,0,0,-1--1--1,,1|(506,1020)|
+!*11,76,48,506,1057,8,6,33,3,0,0,4,0,0,0
+!*10,77,lost in geo ion exchange,558,1057,44,19,40,3,0,0,-1,0,0,0
+!*10,78,ION EXCHANGE RECOVERY,653,1150,67,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,79,78,72,0,0,0,0,0,64,0,-1--1--1,,1|(679,1071)|
+!*1,80,78,77,0,0,0,0,0,64,0,-1--1--1,,1|(610,1108)|
+!*10,81,per year,647,1237,44,12,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,82,81,72,1,0,0,0,0,64,0,-1--1--1,,1|(748,1164)|
+!*1,83,81,77,1,0,0,0,0,64,0,-1--1--1,,1|(544,1149)|
+!*1,84,59,77,1,0,0,0,0,64,0,-1--1--1,,1|(444,1041)|
+!*1,85,59,72,1,0,0,0,0,64,0,-1--1--1,,1|(616,890)|
+!*12,86,48,901,973,10,8,0,3,0,0,-1,0,0,0
+!*1,87,89,60,4,0,0,22,0,0,0,-1--1--1,,1|(1014,973)|
+!*1,88,89,86,100,0,0,22,0,0,0,-1--1--1,,1|(941,973)|
+!*11,89,48,978,973,6,8,34,3,0,0,1,0,0,0
+!*10,90,from conversion,978,992,51,11,40,3,0,0,-1,0,0,0
+!*12,91,48,1300,975,10,8,0,3,0,0,-1,0,0,0
+!*1,92,94,91,4,0,0,22,0,0,0,-1--1--1,,1|(1251,975)|
+!*1,93,94,60,100,0,0,22,0,0,0,-1--1--1,,1|(1163,975)|
+!*11,94,48,1207,975,6,8,34,3,0,0,1,0,0,0
+!*10,95,li from geo,1207,994,40,11,40,3,0,0,-1,0,0,0
+!*10,96,SHIPPING TIME,1355,849,43,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,97,CONVERSION RECOVERY RATE,954,1097,71,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,98,97,90,1,0,0,0,0,64,0,-1--1--1,,1|(991,1040)|
+!*1,99,72,90,1,0,0,0,0,64,0,-1--1--1,,1|(849,1034)|
+!*1,100,60,95,1,0,0,0,0,64,0,-1--1--1,,1|(1151,1024)|
+!*1,101,96,95,1,0,0,0,0,64,0,-1--1--1,,1|(1299,945)|
+!*10,102,Price,1375,957,27,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,103,annual profit,1313,1034,50,18,8,131,0,0,0,0,0,0
+!*1,104,95,103,1,0,0,0,0,64,0,-1--1--1,,1|(1226,1024)|
+!*1,105,9,103,1,0,0,0,0,64,0,-1--1--1,,1|(1207,1073)|
+!*1,106,102,103,0,0,0,0,0,64,0,-1--1--1,,1|(1351,986)|
+!*10,107,actual capex,1551,1372,49,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,108,DISCOUNT RATE,1104,1254,43,19,8,3,0,0,0,0,0,0
+!*10,109,"start new investment?",1512,1032,37,19,8,3,0,0,0,0,0,0
+!*10,110,Year of New Investment,1667,1190,47,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,111,110,109,0,0,0,0,0,64,0,-1--1--1,,1|(1594,1115)|
+!*10,112,Time,1459,943,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,113,112,109,1,0,0,0,0,64,0,-1--1--1,,1|(1456,988)|
+!*10,114,time to start new investment,1543,913,53,19,8,3,0,0,0,0,0,0
+!*1,115,109,114,0,0,0,0,0,64,0,-1--1--1,,1|(1525,979)|
+!*10,116,TIME TO BUILD REFIN CAPA,1740,886,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,117,116,114,0,0,0,0,0,64,0,-1--1--1,,1|(1643,898)|
+!*10,118,time to start new investment,505,355,58,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-1\
+28
+!*1,119,118,18,0,0,0,0,0,64,0,-1--1--1,,1|(509,415)|
+!*1,120,56,18,1,0,0,0,0,64,0,-1--1--1,,1|(462,512)|
+!*10,121,"start new investment?",803,364,42,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,122,121,23,0,0,0,0,0,64,0,-1--1--1,,1|(788,421)|
+!*1,123,13,23,1,0,0,0,0,64,0,-1--1--1,,1|(718,511)|
+!*10,124,Time,1384,836,26,11,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,125,124,114,0,1,0,0,0,64,0,-1--1--1,,1|(1448,867)|
+!*10,126,per year,1454,1537,39,15,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,127,Installed Geo Li Concentrating Capa,1673,1080,69,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||\
+128-128-128
+!*10,128,ave li amount extracted per yr,1694,976,56,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-12\
+8-128
+!*1,129,127,109,0,0,0,0,0,64,0,-1--1--1,,1|(1586,1053)|
+!*1,130,128,109,0,0,0,0,0,64,0,-1--1--1,,1|(1600,1004)|
+!*10,131,Time,957,788,26,11,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,132,131,52,0,1,0,0,0,64,0,-1--1--1,,1|(917,721)|
+!*10,133,TIME STEP,1308,526,50,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,134,47,95,1,0,0,0,0,64,0,-1--1--1,,1|(1194,776)|
+!*10,135,oneyear,547,730,26,11,8,3,0,0,0,0,0,0
+!*1,136,135,40,1,0,0,0,0,64,0,-1--1--1,,1|(553,786)|
+!*10,137,TIME STEP,929,502,50,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,138,137,23,1,0,0,0,0,64,0,-1--1--1,,1|(825,532)|
+!*10,139,one year,1412,411,37,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,140,INITIAL TIME,1575,860,60,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,141,Time,1306,556,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,142,Time,1528,1539,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,143,137,52,1,0,0,0,0,64,0,-1--1--1,,1|(872,574)|
+!*1,144,12,152,1,0,0,0,0,64,0,-1--1--1,,1|(273,500)|
+!*10,145,"Table for Capex/ConcCap Module",160,415,64,19,8,3,0,0,0,0,0,0
+!*10,146,Concentration Cap built,378,701,45,19,8,3,0,0,0,0,0,0
+!*1,147,146,33,1,0,0,0,0,64,0,-1--1--1,,1|(449,681)|
+!*1,148,145,152,1,0,0,0,0,64,0,-1--1--1,,1|(157,487)|
+!*10,149,tonperyear,350,821,34,18,8,131,0,0,0,0,0,0
+!*10,150,dollar,48,359,19,11,8,3,0,0,-1,0,0,0
+!*1,151,150,152,1,0,0,0,0,64,0,-1--1--1,,1|(78,467)|
+!*10,152,Concentration Cap per dollar,251,568,61,19,8,3,0,0,0,0,0,0
+!*1,153,152,146,1,0,0,0,0,64,0,-1--1--1,,1|(281,643)|
+!*1,154,7,146,1,0,0,0,0,64,0,-1--1--1,,1|(299,708)|
+!*10,155,actual capex,1075,782,49,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,156,Conversion Cap per dollar,946,897,53,19,8,3,0,0,0,0,0,0
+!*10,157,"Table for Capex/ConvCap Module",794,906,81,19,8,3,0,0,0,0,0,0
+!*10,158,Conversion Cap built,860,777,53,19,8,3,0,0,0,0,0,0
+!*1,159,157,156,1,0,0,0,0,64,0,-1--1--1,,1|(880,931)|
+!*1,160,155,156,1,0,0,0,0,64,0,-1--1--1,,1|(1034,843)|
+!*1,161,156,158,1,0,0,0,0,64,0,-1--1--1,,1|(952,821)|
+!*1,162,158,52,1,0,0,0,0,64,0,-1--1--1,,1|(826,723)|
+!*10,163,dollar,1155,888,28,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,164,163,156,1,0,0,0,0,64,0,-1--1--1,,1|(1068,901)|
+!*10,165,Net Flow,1380,1253,39,22,8,131,0,0,0,0,0,0
+!*1,166,107,165,1,0,0,0,0,64,0,-1--1--1,,1|(1481,1292)|
+!*1,167,103,165,1,0,0,0,0,64,0,-1--1--1,,1|(1324,1200)|
+!*10,168,NPVV,1242,1358,24,11,8,3,0,0,0,0,0,0
+!*1,169,108,168,1,0,0,0,0,64,0,-1--1--1,,1|(1133,1332)|
+!*1,170,165,168,1,0,0,0,0,64,0,-1--1--1,,1|(1333,1314)|
+!*10,171,Time,821,1436,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,172,INITIAL TIME,836,1503,60,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,173,165,109,1,0,0,0,0,64,0,-1--1--1,,1|(1510,1172)|
+!*10,174,Time,1250,1457,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*10,175,TIME STEP,1400,1451,50,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+!*1,176,175,165,1,0,0,0,0,64,0,-1--1--1,,1|(1401,1346)|
+:SCREEN ERROR861
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!///---\\:GRAPH supply-demand
+:SCREEN ERROR862
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:TITLE supply-demand
+:SCREEN ERROR863
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:X-MIN 2000
+:SCREEN ERROR864
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:X-MAX 2030
+:SCREEN ERROR865
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:SCALE
+:SCREEN ERROR866
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:VAR posted demand
+:SCREEN ERROR867
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:VAR adjusted supply
+!
+:SCREEN ERROR868
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:GRAPH price
+:SCREEN ERROR869
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:TITLE price
+:SCREEN ERROR870
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:X-AXIS time
+:SCREEN ERROR871
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:SCALE
+:SCREEN ERROR872
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:VAR price
+!
+:SCREEN ERROR873
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:GRAPH Potential_Li_production
+:SCREEN ERROR874
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:TITLE Potential Li production
+:SCREEN ERROR875
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:SCALE
+:SCREEN ERROR876
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:VAR potential production
+!
+:SCREEN ERROR877
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:GRAPH Total_Li_supply
+:SCREEN ERROR878
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:TITLE Total Li supply
+:SCREEN ERROR879
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:SCALE
+:SCREEN ERROR880
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:VAR total supply
+!
+:SCREEN ERROR881
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:GRAPH Li_from_brine
+:SCREEN ERROR882
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:TITLE Li from brine
+:SCREEN ERROR883
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:SCALE
+:SCREEN ERROR884
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:VAR brine li to be sold
+!
+:SCREEN ERROR885
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:GRAPH Li_from_ore
+:SCREEN ERROR886
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:TITLE Li from ore
+:SCREEN ERROR887
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:SCALE
+:SCREEN ERROR888
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:VAR li from ore
+!
+:SCREEN ERROR889
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:GRAPH Li_from_geothermal
+:SCREEN ERROR890
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:TITLE Li from geothermal
+:SCREEN ERROR891
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:SCALE
+:SCREEN ERROR892
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:VAR li from geo
+!
+:SCREEN ERROR893
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:GRAPH Demand
+:SCREEN ERROR894
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:TITLE Total Li Demand
+:SCREEN ERROR895
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:SCALE
+:SCREEN ERROR896
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:VAR posted demand
+!
+:SCREEN ERROR897
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:GRAPH Annual_Profit
+:SCREEN ERROR898
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:TITLE Annual Profit
+:SCREEN ERROR899
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:SCALE
+:SCREEN ERROR900
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:VAR annual profit
+:SCREEN ERROR901
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!:L<%^E!@
+:SCREEN ERROR902
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!1:NPS-geo2.vdf
+:SCREEN ERROR903
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!9:NPS-geo2
+!*22:$,Dollar,Dollars,$s
+!*22:C,Cels,cels
+!*22:Day,Days,day
+!*22:Dmnl,dmnl
+!*22:gram,g,grams
+!*22:Hour,Hours,hr
+!*22:liter,liters,l
+!*22:m,meter
+!*22:Month,Months,mo
+!*22:Person,People,Persons
+!*22:Unit,Units
+!*22:Week,Weeks,wk,week,weeks
+!*22:Year,Years,yr,Yr
+:SCREEN ERROR904
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!18:Li market-simplified brine.vsc
+:SCREEN ERROR905
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!20:Li market-simplified brine.lst
+!*15:0,0,0,0,0,0
+!*19:80,3
+:SCREEN ERROR906
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!27:2
+:SCREEN ERROR907
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!34:0
+:SCREEN ERROR908
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!4:Time
+:SCREEN ERROR909
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!5:Refined Li Inventory
+:SCREEN ERROR910
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!35:Date
+:SCREEN ERROR911
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!36:YYYY-MM-DD
+:SCREEN ERROR912
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!37:2005
+:SCREEN ERROR913
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!38:1
+:SCREEN ERROR914
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!39:1
+:SCREEN ERROR915
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!40:0
+:SCREEN ERROR916
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!41:0
+:SCREEN ERROR917
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!24:2005
+:SCREEN ERROR918
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!25:2030
+:SCREEN ERROR919
+SCREENFONT,Times New Roman|10||0-0-0|-1--1--1
+PIXELPOS,0
+!26:2030

@@ -1,0 +1,49 @@
+:GRAPH price
+:TITLE price
+:X-AXIS time
+:SCALE
+:VAR price
+
+:GRAPH Potential_Li_production
+:TITLE  
+:WIP
+:SCALE
+:VAR potential production
+:DATASET *
+
+:GRAPH Total_Li_supply
+:SCALE
+:VAR total supply
+
+:GRAPH Li_from_brine
+:TITLE Li_from_brine
+:SCALE
+:VAR brine li to be sold
+
+:GRAPH Li_from_ore
+:TITLE Li_from_ore
+:SCALE
+:VAR li from ore
+
+:GRAPH Li_from_geothermal
+:TITLE Li_from_geothermal
+:SCALE
+:VAR li from geo
+
+:GRAPH Demand
+:TITLE Total Li Demand
+:SCALE
+:VAR posted demand
+
+:GRAPH annualProfit
+:TITLE annualProfit
+:SCALE
+:VAR annual profit
+
+:GRAPH supdmd
+:WIP
+:SCALE
+:VAR adjusted supply
+:DATASET *
+:VAR posted demand
+:DATASET *
